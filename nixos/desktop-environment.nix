@@ -7,12 +7,6 @@
   services.displayManager.sddm.autoNumlock = true;
   services.desktopManager.plasma6.enable = true;
 
-  #services.displayManager.sddm.autoLogin = {
-  #  enable = true;
-  # user = "nhp";
-  # relogin = true;
-  #};
-
   # Add flatpak support
   services.flatpak.enable = true;
   xdg.portal.enable = true;
