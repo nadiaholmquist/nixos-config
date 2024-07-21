@@ -54,6 +54,10 @@
         hostName = "testvm";
         systemType = "x86_64-linux";
       };
+      nixarm = nixos { # NixOS aarch64 VM on Mac
+        hostName = "nixarm";
+        systemType = "aarch64-linux";
+      };
     };
   };
 }

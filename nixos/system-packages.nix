@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ lib, pkgs, ... }:
 
 {
   environment.systemPackages = with pkgs; [
@@ -13,8 +13,9 @@
     gcc
     cmake
 
-    wineWow64Packages.full
     stress-ng
+  ] ++ lib.optional pkgs.hostPlatform.isx86_64 [
+    wineWow64Packages.full
     cpu-x
   ];
 }

@@ -1,21 +1,37 @@
-{ pkgs, ... }:
+{ lib, pkgs, ... }:
 
-{
-  home.packages = with pkgs; [
-    # Desktop programs
+let
+  inherit (lib) optional;
+  inherit (pkgs.hostPlatform) isx86_64 isAarch64 isLinux isDarwin;
+
+  isMacOrx86_64 = isx86_64 || isDarwin;
+  isx86Linux = isLinux && isx86_64;
+
+  macOrx86_64Packages = with pkgs; optional isMacOrx86_64 [
     discord
     bitwarden-desktop
+    cider # Apple Music
+
+    jetbrains-toolbox
+    jetbrains-clion
+
+    # Swift language server. Technically available on ARM Linux but requires compiling Swift and that's slow.
+    sourcekit-lsp
+  ];
+
+  linuxx86Packages = with pkgs; optional isx86Linux [
+    zenmonitor
+  ];
+
+  commonPackages = with pkgs; [
+    # Desktop programs
     mpv
     audacity
-    cider # Apple Music
     furmark
-    zenmonitor
 
     # Dev programs
     neovim-qt
     neovide
-    jetbrains-toolbox
-    jetbrains.clion
 
     # CLI utilities
     wl-clipboard
@@ -47,11 +63,12 @@
     # Language servers and such
     lua-language-server # For neovim configuration
     clang-tools
-    sourcekit-lsp # Swift
     nixd
     cmake-language-server
     tree-sitter
   ];
+in {
+  home.packages = commonPackages ++ macOrx86_64Packages ++ linuxx86Packages;
 
   programs.neovim = {
     enable = true;
