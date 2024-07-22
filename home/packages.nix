@@ -1,13 +1,13 @@
-{ lib, pkgs, ... }:
+{ config, lib, pkgs, ... }:
 
 let
   inherit (lib) optionals;
-  inherit (pkgs.hostPlatform) isx86_64 isAarch64 isLinux isDarwin;
+  inherit (pkgs.hostPlatform) isx86_64 isLinux isDarwin;
 
   isMacOrx86_64 = isx86_64 || isDarwin;
   isx86Linux = isLinux && isx86_64;
 
-  macOrx86_64Packages = with pkgs; optionals isMacOrx86_64 [
+  macOrx86_64Packages = optionals isMacOrx86_64 (with pkgs; [
     discord
     bitwarden-desktop
     cider # Apple Music
@@ -17,11 +17,11 @@ let
 
     # Swift language server. Technically available on ARM Linux but requires compiling Swift and that's slow.
     sourcekit-lsp
-  ];
+  ]);
 
-  linuxx86Packages = with pkgs; optionals isx86Linux [
+  linuxx86Packages = optionals isx86Linux (with pkgs; [
     zenmonitor
-  ];
+  ]);
 
   commonPackages = with pkgs; [
     # Desktop programs
@@ -67,8 +67,31 @@ let
     cmake-language-server
     tree-sitter
   ];
+
+  gamingPackages = optionals config.dotfiles.enableGaming (with pkgs; [
+    prismlauncher # Minecraft
+
+    # Emulators
+    cemu
+    dolphin-emu-beta
+    duckstation
+    ares
+    nanoboyadvance
+    mgba
+    melonDS
+    (retroarch.override {
+      cores = with libretro; [
+        mesen bsnes snes9x genesis-plus-gx mupen64plus
+      ];
+    })
+    pcsx2
+    ryujinx
+  ]);
 in {
-  home.packages = commonPackages ++ macOrx86_64Packages ++ linuxx86Packages;
+  home.packages = commonPackages
+    ++ macOrx86_64Packages
+    ++ linuxx86Packages
+    ++ gamingPackages;
 
   programs.neovim = {
     enable = true;

@@ -28,11 +28,12 @@
           networking.hostName = hostName;
           _module.args = {
             inherit inputs;
-            system = systemType;
+            #system = systemType;
           };
         }
         disko.nixosModules.disko
         home-manager.nixosModules.home-manager
+        (
         {
           home-manager.useGlobalPkgs = true;
           home-manager.useUserPackages = true;
@@ -41,7 +42,7 @@
           home-manager.users.nhp = {
             imports = [ ./home ];
           };
-        }
+        })
       ];
     } // extra;
   in {
