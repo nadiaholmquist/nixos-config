@@ -14,6 +14,8 @@
 
   # Add Discover for managing flatpaks
   environment.systemPackages = with pkgs; [
+    kdePackages.kmail
+    kdePackages.kmail-account-wizard
     kdePackages.discover
     kde-gruvbox
     (catppuccin-kde.override {
