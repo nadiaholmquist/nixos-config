@@ -1,7 +1,9 @@
-{ config, lib, ...}:
+{ config, pkgs, lib, ...}:
 
-{
-  config = lib.mkIf config.dotfiles.enableGaming {
+let
+  haveSteam = config.dotfiles.enableGaming && pkgs.hostPlatform.isx86_64;
+in {
+  config = lib.mkIf haveSteam {
     programs.steam = {
       enable = true;
       extest.enable = true; # Steam Input on Wayland
