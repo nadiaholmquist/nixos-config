@@ -14,7 +14,7 @@
     cmake
 
     stress-ng
-  ] ++ lib.optional pkgs.hostPlatform.isx86_64 [
+  ] ++ lib.optionals pkgs.hostPlatform.isx86_64 [
     wineWow64Packages.full
     cpu-x
   ];

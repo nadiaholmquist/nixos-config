@@ -1,25 +1,25 @@
 { lib, pkgs, ... }:
 
 let
-  inherit (lib) optional;
+  inherit (lib) optionals;
   inherit (pkgs.hostPlatform) isx86_64 isAarch64 isLinux isDarwin;
 
   isMacOrx86_64 = isx86_64 || isDarwin;
   isx86Linux = isLinux && isx86_64;
 
-  macOrx86_64Packages = with pkgs; optional isMacOrx86_64 [
+  macOrx86_64Packages = with pkgs; optionals isMacOrx86_64 [
     discord
     bitwarden-desktop
     cider # Apple Music
 
     jetbrains-toolbox
-    jetbrains-clion
+    jetbrains.clion
 
     # Swift language server. Technically available on ARM Linux but requires compiling Swift and that's slow.
     sourcekit-lsp
   ];
 
-  linuxx86Packages = with pkgs; optional isx86Linux [
+  linuxx86Packages = with pkgs; optionals isx86Linux [
     zenmonitor
   ];
 
