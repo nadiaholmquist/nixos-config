@@ -45,5 +45,6 @@
     ./packages.nix
     ./graphical-apps.nix
     ./firefox.nix
+    ./openal-soft.nix
   ];
 }
