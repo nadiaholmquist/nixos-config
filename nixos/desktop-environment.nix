@@ -30,4 +30,8 @@
   # AppImage support
   programs.appimage.enable = true;
   programs.appimage.binfmt = true;
+
+  # This is only enabled by default on systems with services.xserver.enabled set to true, and we don't have that
+  # I don't know if it actually matters though tbh
+  gtk.iconCache.enable = true;
 }
