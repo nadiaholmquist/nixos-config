@@ -3,10 +3,17 @@
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+
+    darwin = {
+      url = "github:LnL7/nix-darwin";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     disko = {
       url = "github:nix-community/disko";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
     home-manager = {
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -18,31 +25,34 @@
     };
   };
 
-  outputs = { nixpkgs, disko, home-manager, ... } @inputs: let
+  outputs = { nixpkgs, darwin, disko, home-manager, ... } @inputs: let
+    commonModule = name: {
+      nix.settings.experimental-features = "nix-command flakes";
+      networking.hostName = name;
+      _module.args = { inherit inputs; };
+
+      home-manager.useGlobalPkgs = true;
+      home-manager.useUserPackages = true;
+      nixpkgs.config.allowUnfree = true;
+      home-manager.users.nhp = import ./home;
+    };
     nixos = { hostName, systemType, extra ? {} }: nixpkgs.lib.nixosSystem {
       system = systemType;
       modules = [
         ./nixos
         ./hosts/${hostName}
-        {
-          networking.hostName = hostName;
-          _module.args = {
-            inherit inputs;
-            #system = systemType;
-          };
-        }
         disko.nixosModules.disko
         home-manager.nixosModules.home-manager
-        (
-        {
-          home-manager.useGlobalPkgs = true;
-          home-manager.useUserPackages = true;
-          nixpkgs.config.allowUnfree = true;
-
-          home-manager.users.nhp = {
-            imports = [ ./home ];
-          };
-        })
+        (commonModule hostName)
+      ];
+    } // extra;
+    macos = { hostName, extra ? {} }: darwin.lib.darwinSystem {
+      system = "aarch64-darwin";
+      modules = [
+        ./darwin
+        ./hosts/${hostName}
+        home-manager.darwinModules.home-manager
+        (commonModule hostName)
       ];
     } // extra;
   in {
@@ -58,6 +68,11 @@
       nixarm = nixos { # NixOS aarch64 VM on Mac
         hostName = "nixarm";
         systemType = "aarch64-linux";
+      };
+    };
+    darwinConfigurations = {
+      studio = macos {
+        hostName = "studio";
       };
     };
   };

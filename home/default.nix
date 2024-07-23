@@ -1,4 +1,4 @@
-{ lib, osConfig ? null, ... }:
+{ lib, pkgs, osConfig ? null, ... }:
 
 {
   # TODO find out if there's a better way to "inherit" an option
@@ -14,11 +14,13 @@
     };
   };
 
-  config = {
+  config = let
+    homeDir = if pkgs.stdenv.isDarwin then "/Users/nhp" else "/home/nhp";
+  in {
     programs.home-manager.enable = true;
 
     home.username = "nhp";
-    home.homeDirectory = "/home/nhp";
+    home.homeDirectory = homeDir;
 
     home.sessionPath = [
       "/home/nhp/.local/bin"
@@ -41,6 +43,7 @@
   imports = [
     ./zsh.nix
     ./packages.nix
+    ./graphical-apps.nix
     ./firefox.nix
   ];
 }

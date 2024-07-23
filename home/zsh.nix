@@ -15,6 +15,9 @@
       defaultKeymap = "emacs";
       history.share = true;
       history.ignoreSpace = true;
+      shellAliases = {
+        "ls" = "ls --color=auto";
+      };
       initExtra = ''
         PROMPT='%F{${config.dotfiles.zshPromptColor}}%n@%m %B%1~%b %f%#%f '
 
@@ -67,6 +70,10 @@
         bindkey '^[[1;5D' backward-word              # C-Left
         bindkey '^[0d'    backward-word              # C-Left
         bindkey '^[[5D'   backward-word              # C-Left
+
+        # Option+Left/Right for macOS
+        bindkey "\e\x1B[C" forward-word
+        bindkey "\e\x1B[D" backward-word
       '';
     };
 

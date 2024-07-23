@@ -4,37 +4,36 @@ let
   inherit (lib) optionals;
   inherit (pkgs.hostPlatform) isx86_64 isLinux isDarwin;
 
-  isMacOrx86_64 = isx86_64 || isDarwin;
   isx86Linux = isLinux && isx86_64;
 
-  macOrx86_64Packages = optionals isMacOrx86_64 (with pkgs; [
-    discord
-    bitwarden-desktop
-    cider # Apple Music
+  macPackages = optionals isDarwin (with pkgs; [
 
-    jetbrains-toolbox
-    jetbrains.clion
+  ]);
 
+  linuxx86Packages = optionals isx86Linux (with pkgs; [
     # Swift language server. Technically available on ARM Linux but requires compiling Swift and that's slow.
     sourcekit-lsp
   ]);
 
-  linuxx86Packages = optionals isx86Linux (with pkgs; [
-    zenmonitor
+  linuxPackages = optionals isLinux (with pkgs; [
+    # CLI utilities
+    wl-clipboard
+    usbutils
+    pciutils
+    distrobox
+    
+    # Archives
+    zip
+    p7zip-rar
+    unzip
+
+    # Development
+    gdb
+    lldb
   ]);
 
   commonPackages = with pkgs; [
-    # Desktop programs
-    mpv
-    audacity
-    furmark
-
-    # Dev programs
-    neovim-qt
-    neovide
-
     # CLI utilities
-    wl-clipboard
     fastfetch # you've gotta have a fetch program, right?
     gh
     ripgrep
@@ -42,12 +41,6 @@ let
     btop
     ncdu
     tmux
-    usbutils
-    pciutils
-    unzip
-    zip
-    p7zip-rar
-    distrobox
 
     # Nix stuff
     nixpkgs-fmt
@@ -57,8 +50,6 @@ let
     # Dev CLI
     cmake
     ninja
-    gdb
-    lldb
 
     # Language servers and such
     lua-language-server # For neovim configuration
@@ -67,31 +58,11 @@ let
     cmake-language-server
     tree-sitter
   ];
-
-  gamingPackages = optionals config.dotfiles.enableGaming (with pkgs; [
-    prismlauncher # Minecraft
-
-    # Emulators
-    cemu
-    dolphin-emu-beta
-    duckstation
-    ares
-    nanoboyadvance
-    mgba
-    melonDS
-    (retroarch.override {
-      cores = with libretro; [
-        mesen bsnes snes9x genesis-plus-gx mupen64plus
-      ];
-    })
-    pcsx2
-    ryujinx
-  ]);
 in {
   home.packages = commonPackages
-    ++ macOrx86_64Packages
+    ++ macPackages
     ++ linuxx86Packages
-    ++ gamingPackages;
+    ++ linuxPackages;
 
   programs.neovim = {
     enable = true;
