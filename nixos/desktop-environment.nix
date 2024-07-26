@@ -5,6 +5,7 @@
   services.displayManager.sddm.enable = true;
   services.displayManager.sddm.wayland.enable = true;
   services.displayManager.sddm.autoNumlock = true;
+  services.displayManager.sddm.theme = "breeze";
   services.desktopManager.plasma6.enable = true;
 
   # Add flatpak support
