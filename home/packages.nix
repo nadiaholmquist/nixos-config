@@ -45,6 +45,8 @@ let
     # Nix stuff
     nixpkgs-fmt
     nix-search-cli
+    nix-tree
+    nix-update
     comma
 
     # Dev CLI

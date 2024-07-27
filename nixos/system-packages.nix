@@ -1,7 +1,7 @@
 { lib, pkgs, ... }:
 
 {
-  environment.systemPackages = with pkgs; [
+  environment.systemPackages = (with pkgs; [
     git
     file
     wget
@@ -13,9 +13,11 @@
     gcc
     cmake
 
+    alsa-utils
+
     stress-ng
-  ] ++ lib.optionals pkgs.hostPlatform.isx86_64 [
+  ]) ++ lib.optionals pkgs.hostPlatform.isx86_64 (with pkgs; [
     wineWow64Packages.full
     cpu-x
-  ];
+  ]);
 }
