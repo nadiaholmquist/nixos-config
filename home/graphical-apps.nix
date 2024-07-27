@@ -24,7 +24,6 @@ let
   commonPackages = with pkgs; [
     # Graphical apps
     mpv
-    neovim-qt
     audacity
 
     # Dev programs

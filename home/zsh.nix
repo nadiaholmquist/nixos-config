@@ -84,6 +84,7 @@
 
     programs.direnv.enable = true;
     programs.direnv.nix-direnv.enable = true;
-    programs.direnv.silent = true;
+    # Not in 24.05
+    #programs.direnv.silent = true;
   };
 }
