@@ -2,8 +2,8 @@
   description = "My NixOS configuration.";
 
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-24.05";
-    nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+    #nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
 
     darwin = {
       url = "github:LnL7/nix-darwin";
@@ -16,7 +16,7 @@
     };
 
     home-manager = {
-      url = "github:nix-community/home-manager/release-24.05";
+      url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
@@ -26,23 +26,23 @@
     };
   };
 
-  outputs = { nixpkgs, nixpkgs-unstable, darwin, disko, home-manager, ... } @inputs: let
-    unstablePkgsFor = system: final: prev: {
-      pkgsUnstable = import nixpkgs-unstable {
-        inherit system;
-        config.allowUnfree = true;
-      };
-    };
+  outputs = { nixpkgs, darwin, disko, home-manager, ... } @inputs: let
+    #unstablePkgsFor = system: final: prev: rec {
+    #  pkgsUnstable = import nixpkgs-unstable {
+    #    inherit system;
+    #    config.allowUnfree = true;
+    #  };
+    #};
 
     commonModuleFor = system: hostName: let
-      unstableOverlay = unstablePkgsFor system;
+      #unstableOverlay = unstablePkgsFor system;
     in {
       _module.args = { inherit inputs; };
       nix.settings.experimental-features = "nix-command flakes";
       networking.hostName = hostName;
 
       nixpkgs.config.allowUnfree = true;
-      nixpkgs.overlays = [ unstableOverlay ];
+      #nixpkgs.overlays = [ unstableOverlay ];
     };
 
     hmModule = {
