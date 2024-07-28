@@ -25,25 +25,14 @@
     home.sessionPath = [
       "/home/nhp/.local/bin"
     ];
-
-    programs.git = {
-      enable = true;
-      userName = "Nadia Holmquist Pedersen";
-      userEmail = "nadia@nhp.sh";
-      extraConfig = {
-        url = {
-          "ssh://git@github.com" = {
-            insteadOf = "github";
-          };
-        };
-      };
-    };
   };
 
   imports = [
     ./zsh.nix
     ./packages.nix
     ./graphical-apps.nix
+    ./git.nix
+    ./neovim.nix
     ./firefox.nix
     ./openal-soft.nix
   ];

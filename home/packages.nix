@@ -44,6 +44,7 @@ let
 
     # Nix stuff
     nixpkgs-fmt
+    nix-index
     nix-search-cli
     nix-tree
     nix-update
@@ -65,17 +66,4 @@ in {
     ++ macPackages
     ++ linuxx86Packages
     ++ linuxPackages;
-
-  programs.neovim = {
-    enable = true;
-    #package = pkgs.pkgsUnstable.neovim-unwrapped;
-    defaultEditor = true;
-    withNodeJs = true; # Needed for some plugins
-    withPython3 = true;
-    vimAlias = true;
-    viAlias = true;
-  };
-
-  programs.git.lfs.enable = true;
-  programs.nix-index.enable = true;
 }
