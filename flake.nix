@@ -5,6 +5,8 @@
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
     #nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
 
+    nixos-hardware.url = "github:NixOS/nixos-hardware";
+
     darwin = {
       url = "github:LnL7/nix-darwin";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -37,7 +39,6 @@
     commonModuleFor = system: hostName: let
       #unstableOverlay = unstablePkgsFor system;
     in {
-      _module.args = { inherit inputs; };
       nix.settings.experimental-features = "nix-command flakes";
       networking.hostName = hostName;
 
@@ -58,6 +59,7 @@
       commonModule = commonModuleFor system hostName;
     in nixpkgs.lib.nixosSystem {
       system = system;
+      specialArgs = { inherit inputs; };
       modules = [
         ./nixos
         ./hosts/${hostName}
@@ -73,6 +75,7 @@
       commonModule = commonModuleFor system hostName;
     in darwin.lib.darwinSystem {
       inherit system;
+      specialArgs = { inherit inputs; };
       modules = [
         ./darwin
         ./hosts/${hostName}
