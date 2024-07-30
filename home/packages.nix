@@ -21,6 +21,7 @@ let
     usbutils
     pciutils
     distrobox
+    calc
     
     # Archives
     zip
