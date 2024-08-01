@@ -13,4 +13,6 @@
     home.stateVersion = "24.05";
     dotfiles.zshPromptColor = "cyan";
   };
+
+  boot.binfmt.emulatedSystems = [ "aarch64-linux" "x86_64-windows" ];
 }
