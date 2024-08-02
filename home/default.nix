@@ -35,5 +35,6 @@
     ./neovim.nix
     ./firefox.nix
     ./openal-soft.nix
+    ./appearance.nix
   ];
 }
