@@ -90,10 +90,6 @@
         hostName = "narshe";
         system = "x86_64-linux";
       };
-      testvm = nixos {
-        hostName = "testvm";
-        system = "x86_64-linux";
-      };
       nixarm = nixos { # NixOS aarch64 VM on Mac
         hostName = "nixarm";
         system = "aarch64-linux";

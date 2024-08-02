@@ -34,5 +34,6 @@ with lib;
     ./gaming.nix
     ./fan-control.nix
     ./nh.nix
+    ./vm-variant.nix
   ];
 }
