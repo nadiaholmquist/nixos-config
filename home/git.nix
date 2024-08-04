@@ -33,6 +33,8 @@
       mergetool = toolArgs // {
         nvimdiff.layout = "LOCAL,BASE,REMOTE / MERGED";
       };
+
+      include.path = "config.local";
     };
   };
 }

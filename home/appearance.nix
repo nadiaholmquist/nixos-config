@@ -6,6 +6,7 @@ lib.mkIf pkgs.stdenv.isLinux {
   # I can even omit the package below and have it make an invalid symlink and it'll still work, very weird...
   home.pointerCursor = {
     gtk.enable = true;
+    x11.enable = true;
     package = pkgs.kdePackages.breeze;
     name = "breeze_cursors";
   };

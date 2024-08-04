@@ -11,6 +11,7 @@
       tpmSupport = true;
     }).fd
   ];
+  environment.systemPackages = [ pkgs.virtiofsd ];
 
   programs.virt-manager.enable = lib.mkDefault true;
 
