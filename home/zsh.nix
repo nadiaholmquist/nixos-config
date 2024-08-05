@@ -35,6 +35,7 @@
         zstyle ':completion:*' rehash true
         # show a nice menu with the matches
         #zstyle ':completion:*' menu yes select
+        zstyle ':completion:*' matcher-list "" 'm:{a-zA-Z}={A-Za-z}'
 
         bindkey '\e[1~' beginning-of-line            # Home
         bindkey '\e[7~' beginning-of-line            # Home
@@ -74,6 +75,8 @@
         # Option+Left/Right for macOS
         bindkey "\e\x1B[C" forward-word
         bindkey "\e\x1B[D" backward-word
+
+        test -e "''${HOME}/.iterm2_shell_integration.zsh" && source "''${HOME}/.iterm2_shell_integration.zsh"
       '';
     };
 
