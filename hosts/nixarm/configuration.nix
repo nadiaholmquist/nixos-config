@@ -8,7 +8,7 @@
   dotfiles.enableGaming = false;
   dotfiles.autoLogin = true;
 
-  virtualisation.vmware.guest.enable = true;
+  virtualisation.rosetta.enable = true;
 
   home-manager.users.nhp = {
     home.stateVersion = "24.05";

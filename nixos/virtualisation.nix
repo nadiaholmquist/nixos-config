@@ -15,9 +15,11 @@
 
   programs.virt-manager.enable = lib.mkDefault true;
 
-  specialisation.vmware.configuration = { pkgs, ... }: {
-    boot.kernelPackages = lib.mkForce pkgs.linuxPackages;
-    virtualisation.vmware.host.enable = true;
+  specialisation.vmware = lib.mkIf (pkgs.system == "x86_64-linux") {
+    configuration = { pkgs, ... }: {
+      boot.kernelPackages = lib.mkForce pkgs.linuxPackages;
+      virtualisation.vmware.host.enable = true;
+    };
   };
 
   # Not Docker
