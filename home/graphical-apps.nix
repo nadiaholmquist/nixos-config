@@ -15,7 +15,6 @@ let
 
     jetbrains-toolbox
     jetbrains.clion
-    vscode
 
     furmark
     zenmonitor

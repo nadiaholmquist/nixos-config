@@ -36,5 +36,6 @@
     ./firefox.nix
     ./openal-soft.nix
     ./appearance.nix
+    ./vscode.nix
   ];
 }
