@@ -1,8 +1,10 @@
 { pkgs, lib, ... }:
 
 let
-  direnvWrapper = prog: pkgs.writeShellScriptBin "direnv-${prog}" ''
-    exec direnv exec "$PWD" "${prog}" "$@"
+  direnvWrapper = drv: let
+    exeName = drv.meta.mainProgram;
+  in pkgs.writeShellScriptBin "direnv-${exeName}" ''
+    exec direnv exec "$PWD" "${drv}/bin/${exeName}" "$@"
   '';
 in{
   programs.direnv.enable = true;
@@ -12,9 +14,9 @@ in{
   
   # binary wrappers to make IDEs pick up direnvs
   home.packages = [
-    (direnvWrapper "cmake")
-    (direnvWrapper "make")
-    (direnvWrapper "meson")
-    (direnvWrapper "ninja")
+    (direnvWrapper pkgs.cmake)
+    (direnvWrapper pkgs.gnumake)
+    (direnvWrapper pkgs.meson)
+    (direnvWrapper pkgs.ninja)
   ];
 }
