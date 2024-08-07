@@ -44,7 +44,7 @@
 
         bindkey '\e[4~' end-of-line                  # End
         bindkey '\e[8~' end-of-line                  # End
-        bindkey '\e[F ' end-of-line                  # End
+        bindkey '\e[F'  end-of-line                  # End
         bindkey '\eOF'  end-of-line                  # End
 
         bindkey '^?'    backward-delete-char         # Backspace
@@ -54,7 +54,6 @@
 
         bindkey '^H'      backward-kill-word         # C-Backspace
 
-        bindkey '5~'      kill-word                  # C-Del
         bindkey '^[[3;5~' kill-word                  # C-Del
         bindkey '^[[3^'   kill-word                  # C-Del
 
