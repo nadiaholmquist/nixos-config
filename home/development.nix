@@ -1,10 +1,11 @@
-{ pkgs, lib, ... }:
+{ pkgs, lib, config, ... }:
 
 let
   direnvWrapper = drv: let
+    direnvExe = "${config.programs.direnv.package}/bin/direnv";
     exeName = drv.meta.mainProgram;
   in pkgs.writeShellScriptBin "direnv-${exeName}" ''
-    exec direnv exec "$PWD" "${drv}/bin/${exeName}" "$@"
+    exec "${direnvExe}" exec "$PWD" "${drv}/bin/${exeName}" "$@"
   '';
 in{
   programs.direnv.enable = true;
