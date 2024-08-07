@@ -83,10 +83,5 @@
       zsh-completions
       nix-zsh-completions
     ];
-
-    programs.direnv.enable = true;
-    programs.direnv.nix-direnv.enable = true;
-    # Not in 24.05
-    #programs.direnv.silent = true;
   };
 }
