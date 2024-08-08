@@ -50,6 +50,7 @@ let
     nix-tree
     nix-update
     comma
+    deploy-rs
 
     # Dev CLI
     cmake
