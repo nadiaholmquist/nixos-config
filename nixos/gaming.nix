@@ -3,6 +3,10 @@
 let
   haveSteam = config.dotfiles.enableGaming && pkgs.hostPlatform.isx86_64;
 in {
+  options = {
+    dotfiles.enableGaming = lib.mkEnableOption "Enable packages for gaming support.";
+  };
+
   config = lib.mkIf haveSteam {
     programs.steam = {
       enable = true;

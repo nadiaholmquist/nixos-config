@@ -1,7 +1,17 @@
 { lib, config, ... }:
 
-{
-  config = lib.mkIf config.dotfiles.autoLogin {
+let 
+ inherit (lib) mkOption mkIf types;
+in {
+  options = {
+    dotfiles.autoLogin = mkOption {
+      type = types.bool;
+      description = "Configure the display manager for autologin.";
+      default = false;
+    };
+  };
+
+  config = mkIf config.dotfiles.autoLogin {
     services.displayManager = {
       autoLogin = {
         enable = true;
