@@ -12,4 +12,11 @@ lib.mkIf pkgs.stdenv.isLinux {
   };
 
   gtk.theme.name = "Breeze";
+
+  home.packages = [
+    (pkgs.catppuccin-kde.override {
+      flavour = ["mocha"];
+      accents = ["red"];
+    })
+  ];
 }

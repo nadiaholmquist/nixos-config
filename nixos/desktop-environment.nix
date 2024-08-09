@@ -2,27 +2,28 @@
 
 {
   # Enable the KDE Plasma Desktop Environment.
-  services.displayManager.sddm.enable = true;
-  services.displayManager.sddm.wayland.enable = true;
-  services.displayManager.sddm.autoNumlock = true;
-  services.displayManager.sddm.theme = "breeze";
+  services.displayManager.sddm = {
+    enable = true;
+    wayland.enable = true;
+    autoNumlock = true;
+    theme = "breeze";
+  };
+
   services.desktopManager.plasma6.enable = true;
+  programs.kde-pim = {
+    enable = true;
+    kmail = true;
+    kontact = true;
+    merkuro = true;
+  };
 
   # Add flatpak support
   services.flatpak.enable = true;
   xdg.portal.enable = true;
   fonts.fontDir.enable = true;
 
-  # Add Discover for managing flatpaks
   environment.systemPackages = with pkgs; [
-    kdePackages.kmail
-    kdePackages.kmail-account-wizard
     kdePackages.discover
-    kde-gruvbox
-    (catppuccin-kde.override {
-      flavour = ["mocha"];
-      accents = ["red"];
-    })
   ];
 
   # Electron applications should use Wayland
