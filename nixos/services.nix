@@ -1,4 +1,4 @@
-{ ... }:
+{ pkgs, ... }:
 
 {
   # Enable networking
@@ -19,7 +19,18 @@
   services.resolved.enable = true;
 
   # mDNS network discovery
-  services.avahi.enable = true;
-  services.avahi.nssmdns4 = true;
-  services.avahi.nssmdns6 = true;
+  services.avahi = {
+    enable = true;
+    nssmdns4 = true;
+    nssmdns6 = true;
+    openFirewall = true;
+    publish = {
+      enable = true;
+      hinfo = true;
+      workstation = true;
+    };
+    extraServiceFiles = {
+      ssh = "${pkgs.avahi}/etc/avahi/services/ssh.service";
+    };
+  };
 }
