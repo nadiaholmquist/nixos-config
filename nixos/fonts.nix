@@ -10,6 +10,7 @@
     noto-fonts-cjk
     corefonts
     vistafonts
+    inter
 
     fira
     # Some editors do not like variable TTF fonts, so use the regular one
@@ -26,6 +27,7 @@
     defaultFonts.monospace = ["Fira Mono"];
     # Need to figure out how to make this use SF Pro Display at and above 20pt. Use default for now.
     #defaultFonts.sansSerif = ["SF Pro Text"];
+    defaultFonts.sansSerif = ["Inter"];
     defaultFonts.serif = ["Times New Roman"];
   };
 
