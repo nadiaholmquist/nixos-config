@@ -6,4 +6,8 @@
     dotfiles.zshPromptColor = "green";
     dotfiles.enableGaming = false;
   };
+
+  imports = [
+    ./builders.nix
+  ];
 }
