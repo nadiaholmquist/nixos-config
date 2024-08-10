@@ -14,4 +14,9 @@ in {
 
   # nct6775 is required for temp sensors/fan control
   boot.kernelModules = [ "kvm-amd" "nct6775" ];
+
+  # Attempt to work around Intel I225-V random disconnects
+  boot.kernelParams = [
+    "pcie_port_pm=off" "pcie_aspm.policy=performance"
+  ];
 }
