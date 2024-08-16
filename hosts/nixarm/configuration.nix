@@ -7,6 +7,7 @@
   dotfiles.gpuSupport = null;
   dotfiles.enableGaming = false;
   dotfiles.autoLogin = true;
+  dotfiles.enableVirtualisation = false;
 
   virtualisation.rosetta.enable = true;
 
