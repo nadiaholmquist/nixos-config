@@ -9,7 +9,6 @@ let
   inherit (pkgs.hostPlatform) isx86_64 isLinux isDarwin;
 
   x86_64Packages = optionals isx86_64 (with pkgs; [
-    discord
     bitwarden-desktop
     cider # Apple Music
 
@@ -21,6 +20,8 @@ let
   ]);
 
   commonPackages = with pkgs; [
+    vesktop # Discord client
+
     # Graphical apps
     mpv
     audacity
