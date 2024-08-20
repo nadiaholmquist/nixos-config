@@ -49,6 +49,8 @@ let
     nix-search-cli
     nix-tree
     nix-update
+    nix-output-monitor
+    nixos-rebuild
     comma
     deploy-rs
 
