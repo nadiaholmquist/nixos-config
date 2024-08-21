@@ -24,6 +24,13 @@
 
   environment.systemPackages = with pkgs; [
     kdePackages.discover
+
+    # Spell checking
+    aspell
+    aspellDicts.da
+    aspellDicts.en
+    aspellDicts.en-computers
+    aspellDicts.en-science
   ];
 
   # Electron applications should use Wayland
