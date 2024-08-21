@@ -39,7 +39,7 @@
     commonModuleFor = system: hostName: let
       #unstableOverlay = unstablePkgsFor system;
     in {
-      nix.settings.experimental-features = "nix-command flakes";
+      nix.settings.experimental-features = "nix-command flakes repl-flake";
       networking.hostName = hostName;
 
       nixpkgs.config.allowUnfree = true;
