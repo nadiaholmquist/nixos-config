@@ -8,6 +8,7 @@
   dotfiles.enableFanControl = true;
   dotfiles.gpuSupport = "amd";
   dotfiles.enableGaming = true;
+  dotfiles.enableVirtualisation = true;
 
   home-manager.users.nhp = {
     home.stateVersion = "24.05";
