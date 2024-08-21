@@ -26,6 +26,11 @@
       url = "github:nadiaholmquist/apple-fonts.nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    nixGL = {
+      url = "github:nix-community/nixGL";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs = { nixpkgs, darwin, disko, home-manager, ... } @inputs: let
@@ -98,6 +103,17 @@
     darwinConfigurations = {
       studio = macos {
         hostName = "studio";
+      };
+    };
+
+    homeConfigurations = {
+      deck = home-manager.lib.homeManagerConfiguration {
+        pkgs = import nixpkgs { system = "x86_64-linux"; };
+        extraSpecialArgs = { inherit inputs; };
+        modules = [
+          ./hosts/deck
+          ./home
+        ];
       };
     };
   };

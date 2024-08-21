@@ -1,6 +1,6 @@
-{ pkgs, lib, ... }:
+{ pkgs, lib, config, ... }:
 
-lib.mkIf pkgs.stdenv.isLinux {
+lib.mkIf config.dotfiles.enableHomeGuiApps {
   programs.vscode.enable = true;
   programs.vscode.extensions = with pkgs.vscode-extensions; [
     vscodevim.vim

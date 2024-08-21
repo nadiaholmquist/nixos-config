@@ -1,4 +1,4 @@
-{ pkgs, lib, ... }:
+{ pkgs, lib, config, ... }:
 
 let
   inherit (lib.attrsets) mapAttrs' nameValuePair;
@@ -8,7 +8,7 @@ let
       install_url = "https://addons.mozilla.org/firefox/downloads/latest/${name}/latest.xpi";
       installation_mode = "force_installed";
     }) exts;
-in lib.mkIf pkgs.stdenv.isLinux {
+in lib.mkIf config.dotfiles.enableHomeGuiApps {
   programs.firefox = {
     enable = true;
     nativeMessagingHosts = with pkgs; [ kdePackages.plasma-browser-integration ];

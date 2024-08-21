@@ -1,29 +1,34 @@
-{ lib, pkgs, osConfig ? null, ... }:
+{ lib, pkgs, config, osConfig ? null, ... }:
 
 {
   # TODO find out if there's a better way to "inherit" an option
-  options = let
+  options.dotfiles = let
     inherit (lib) mkOption types;
   in {
-    dotfiles.enableGaming = mkOption {
+    enableGaming = mkOption {
       type = types.bool;
       description = "Enable gaming-related packages.";
       default =
         if osConfig != null then osConfig.dotfiles.enableGaming
         else false;
     };
+    enableHomeGuiApps = mkOption {
+      type = types.bool;
+      description = "Let Home Manager install graphical apps.";
+      default = !(config.targets.genericLinux.enable || pkgs.stdenv.isDarwin);
+    };
   };
 
   config = let
-    homeDir = if pkgs.stdenv.isDarwin then "/Users/nhp" else "/home/nhp";
+    username = config.home.username;
+    homePrefix = if pkgs.stdenv.isDarwin then "/Users/" else "/home/";
   in {
     programs.home-manager.enable = true;
 
-    home.username = "nhp";
-    home.homeDirectory = homeDir;
+    home.homeDirectory = homePrefix + username;
 
     home.sessionPath = [
-      "/home/nhp/.local/bin"
+      "/home/${username}/.local/bin"
     ];
   };
 

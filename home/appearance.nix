@@ -1,6 +1,6 @@
-{ pkgs, lib, ... }:
+{ pkgs, lib, config, ... }:
 
-lib.mkIf pkgs.stdenv.isLinux {
+lib.mkIf config.dotfiles.enableHomeGuiApps {
   # For some reason, setting this through Home Manager fixes the cursor theme being inconsistent in some apps (notablly, JetBrains IDEs and Steam).
   # just setting it in KDE doesn't work.
   # I can even omit the package below and have it make an invalid symlink and it'll still work, very weird...
