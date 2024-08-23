@@ -104,6 +104,9 @@
       studio = macos {
         hostName = "studio";
       };
+      nadiabook = macos {
+        hostName = "nadiabook";
+      };
     };
 
     homeConfigurations = {
