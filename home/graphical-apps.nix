@@ -12,11 +12,7 @@ let
   x86_64Packages = optionals isx86_64 (with pkgs; [
     bitwarden-desktop
     cider # Apple Music
-
     jetbrains-toolbox
-    jetbrains.clion
-
-    furmark
     zenmonitor
   ]);
 
@@ -26,8 +22,11 @@ let
     # Graphical apps
     mpv
     audacity
+    vlc
 
     # Dev programs
+    jetbrains.clion
+    jetbrains.idea-ultimate
     neovide
   ];
 
