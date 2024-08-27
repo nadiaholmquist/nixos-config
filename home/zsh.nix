@@ -12,68 +12,33 @@
       enable = true;
       enableCompletion = true;
       autocd = true;
-      defaultKeymap = "emacs";
       history.share = true;
       history.ignoreSpace = true;
+
+      plugins = [
+        {
+          name = "vi-mode";
+          src = pkgs.zsh-vi-mode;
+          file = "share/zsh-vi-mode/zsh-vi-mode.plugin.zsh";
+        }
+      ];
+
       shellAliases = {
-        "ls" = "ls --color=auto";
+        # Use GNU coreutils's ls even on macOS
+        # It lays out the file list a bit nicer and follows LS_COLORS
+        "ls" = "${pkgs.coreutils}/bin/ls --color=auto";
       };
+
       initExtra = ''
         PROMPT='%F{${config.dotfiles.zshPromptColor}}%n@%m %B%1~%b %f%#%f '
+        # Default wordchars without slash
+        WORDCHARS='*?_-.[]~=&;!#$%^(){}<>'
 
-        # Make slash not be considered part of a word
-        #WORDCHARS=''${WORDCHARS/\/}
-        autoload -U select-word-style
-        select-word-style bash
-
-        # Stolen from https://pm.bsc.es/gitlab/rarias/jungle/-/commit/3418e57907622bbfb35a3d93939324d97e4fd924
-        # From Arch Linux and GRML
-        bindkey "^R" history-incremental-pattern-search-backward
-        bindkey "^S" history-incremental-pattern-search-forward
-
-        # Auto rehash for new binaries
         zstyle ':completion:*' rehash true
-        # show a nice menu with the matches
-        #zstyle ':completion:*' menu yes select
+        # Case-insensitive completion
         zstyle ':completion:*' matcher-list "" 'm:{a-zA-Z}={A-Za-z}'
-
-        bindkey '\e[1~' beginning-of-line            # Home
-        bindkey '\e[7~' beginning-of-line            # Home
-        bindkey '\e[H'  beginning-of-line            # Home
-        bindkey '\eOH'  beginning-of-line            # Home
-
-        bindkey '\e[4~' end-of-line                  # End
-        bindkey '\e[8~' end-of-line                  # End
-        bindkey '\e[F'  end-of-line                  # End
-        bindkey '\eOF'  end-of-line                  # End
-
-        bindkey '^?'    backward-delete-char         # Backspace
-        bindkey '\e[3~' delete-char                  # Del
-        # bindkey '\e[3;5~' delete-char                # sometimes Del, sometimes C-Del
-        bindkey '\e[2~' overwrite-mode               # Ins
-
-        bindkey '^H'      backward-kill-word         # C-Backspace
-
-        bindkey '^[[3;5~' kill-word                  # C-Del
-        bindkey '^[[3^'   kill-word                  # C-Del
-
-        bindkey "^[[1;5H" backward-kill-line         # C-Home
-        bindkey "^[[7^"   backward-kill-line         # C-Home
-
-        bindkey "^[[1;5F" kill-line                  # C-End
-        bindkey "^[[8^"   kill-line                  # C-End
-
-        bindkey '^[[1;5C' forward-word               # C-Right
-        bindkey '^[0c'    forward-word               # C-Right
-        bindkey '^[[5C'   forward-word               # C-Right
-
-        bindkey '^[[1;5D' backward-word              # C-Left
-        bindkey '^[0d'    backward-word              # C-Left
-        bindkey '^[[5D'   backward-word              # C-Left
-
-        # Option+Left/Right for macOS
-        bindkey "\e\x1B[C" forward-word
-        bindkey "\e\x1B[D" backward-word
+        # Completion uses dircolors
+        zstyle ':completion:*' list-colors "''${(@s.:.)LS_COLORS}"
 
         test -e "''${HOME}/.iterm2_shell_integration.zsh" && source "''${HOME}/.iterm2_shell_integration.zsh"
       '';
@@ -83,5 +48,7 @@
       zsh-completions
       nix-zsh-completions
     ];
+
+    programs.dircolors.enable = true;
   };
 }
