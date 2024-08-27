@@ -1,11 +1,18 @@
 { pkgs, lib, ... }:
 
 {
-  boot.kernelPackages = lib.mkDefault pkgs.linuxPackages_latest;
+  boot = {
+    kernelPackages = lib.mkDefault pkgs.linuxPackages_latest;
 
-  boot.loader.systemd-boot.enable = true;
-  boot.loader.systemd-boot.consoleMode = "max";
-  boot.loader.timeout = 0;
-  boot.loader.efi.canTouchEfiVariables = true;
-  boot.plymouth.enable = true;
+    loader = {
+      timeout = 0;
+      systemd-boot.enable = true;
+      systemd-boot.consoleMode = "max";
+      efi.canTouchEfiVariables = true;
+    };
+
+    initrd.systemd.enable = true;
+
+    plymouth.enable = true;
+  };
 }
