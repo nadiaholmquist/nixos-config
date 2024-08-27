@@ -39,6 +39,10 @@
         zstyle ':completion:*' matcher-list "" 'm:{a-zA-Z}={A-Za-z}'
         # Completion uses dircolors
         zstyle ':completion:*' list-colors "''${(@s.:.)LS_COLORS}"
+        bindkey '^[[1;5D' backward-word              # C-Left
+        bindkey '^[[1;5C' forward-word               # C-Right
+        bindkey "\e\x1B[C" forward-word
+        bindkey "\e\x1B[D" backward-word
 
         test -e "''${HOME}/.iterm2_shell_integration.zsh" && source "''${HOME}/.iterm2_shell_integration.zsh"
       '';
