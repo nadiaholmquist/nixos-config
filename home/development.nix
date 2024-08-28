@@ -7,17 +7,16 @@ let
   in pkgs.writeShellScriptBin "direnv-${exeName}" ''
     exec "${direnvExe}" exec "$PWD" "${drv}/bin/${exeName}" "$@"
   '';
+
+  # binary wrappers to make IDEs pick up direnvs
+  wrappers = map direnvWrapper (with pkgs; [
+    cmake gnumake meson ninja
+  ]);
 in{
   programs.direnv.enable = true;
   programs.direnv.nix-direnv.enable = true;
-  # Not in 24.05
-  #programs.direnv.silent = true;
   
-  # binary wrappers to make IDEs pick up direnvs
-  home.packages = [
-    (direnvWrapper pkgs.cmake)
-    (direnvWrapper pkgs.gnumake)
-    (direnvWrapper pkgs.meson)
-    (direnvWrapper pkgs.ninja)
+  home.packages = wrappers ++ [
+    pkgs.rustup
   ];
 }

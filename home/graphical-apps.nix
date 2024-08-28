@@ -27,6 +27,7 @@ let
     # Dev programs
     jetbrains.clion
     jetbrains.idea-ultimate
+    jetbrains.rust-rover
     neovide
   ];
 
