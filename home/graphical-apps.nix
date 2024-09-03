@@ -18,6 +18,7 @@ let
 
   commonPackages = with pkgs; [
     vesktop # Discord client
+    element-desktop
 
     # Graphical apps
     mpv
