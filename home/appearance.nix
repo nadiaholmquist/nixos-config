@@ -9,6 +9,7 @@ lib.mkIf config.dotfiles.enableHomeGuiApps {
     x11.enable = true;
     package = pkgs.kdePackages.breeze;
     name = "breeze_cursors";
+    size = 24;
   };
 
   gtk.theme.name = "Breeze";
