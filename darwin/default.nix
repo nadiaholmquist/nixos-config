@@ -3,7 +3,8 @@
 {
   services.nix-daemon.enable = true;
   nix.gc.automatic = true;
-  nix.settings.auto-optimise-store = true;
+  # NOT safe on macOS.
+  nix.settings.auto-optimise-store = false;
 
   users = {
     users.nhp = {
