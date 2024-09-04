@@ -6,33 +6,6 @@ let
 
   isx86Linux = isLinux && isx86_64;
 
-  macPackages = optionals isDarwin (with pkgs; [
-
-  ]);
-
-  linuxx86Packages = optionals isx86Linux (with pkgs; [
-    # Swift language server. Technically available on ARM Linux but requires compiling Swift and that's slow.
-    sourcekit-lsp
-  ]);
-
-  linuxPackages = optionals isLinux (with pkgs; [
-    # CLI utilities
-    wl-clipboard
-    usbutils
-    pciutils
-    distrobox
-    calc
-    
-    # Archives
-    zip
-    p7zip
-    unzip
-
-    # Development
-    gdb
-    lldb
-  ]);
-
   commonPackages = with pkgs; [
     # CLI utilities
     fastfetch # you've gotta have a fetch program, right?
@@ -42,6 +15,12 @@ let
     btop
     ncdu
     tmux
+    calc
+
+    # Archives
+    zip
+    p7zip-rar
+    unzip
 
     # Nix stuff
     nixpkgs-fmt
@@ -65,6 +44,27 @@ let
     cmake-language-server
     tree-sitter
   ];
+
+  macPackages = optionals isDarwin (with pkgs; [
+    gnumake
+  ]);
+
+  linuxx86Packages = optionals isx86Linux (with pkgs; [
+    # Swift language server. Technically available on ARM Linux but requires compiling Swift and that's slow.
+    sourcekit-lsp
+  ]);
+
+  linuxPackages = optionals isLinux (with pkgs; [
+    # CLI utilities
+    wl-clipboard
+    usbutils
+    pciutils
+    distrobox
+
+    # Development
+    gdb
+    lldb
+  ]);
 in {
   home.packages = commonPackages
     ++ macPackages
