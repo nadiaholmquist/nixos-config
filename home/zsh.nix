@@ -45,6 +45,9 @@
         bindkey "\e\x1B[D" backward-word
 
         test -e "''${HOME}/.iterm2_shell_integration.zsh" && source "''${HOME}/.iterm2_shell_integration.zsh"
+
+        # Makes nix-shell and nix shell/develop use zsh
+        ${pkgs.nix-your-shell}/bin/nix-your-shell zsh | source /dev/stdin
       '';
     };
 
