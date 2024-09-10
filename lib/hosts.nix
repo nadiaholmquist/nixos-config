@@ -10,7 +10,8 @@ let
 
   commonModuleFor = system: hostName: let
     #unstableOverlay = unstablePkgsFor system;
-  in {
+  in { pkgs, ... }: {
+    nix.package = pkgs.lix;
     nix.settings.experimental-features = "nix-command flakes repl-flake";
     networking.hostName = hostName;
 
