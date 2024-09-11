@@ -13,4 +13,6 @@ in {
     nixGLPkgs.nixVulkanIntel
     pkgs.gcc
   ];
+
+  home.username = "deck";
 }
