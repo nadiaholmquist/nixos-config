@@ -1,66 +1,68 @@
-{ nixpkgs, home-manager, darwin, disko, ... } @inputs:
+{
+  nixpkgs-nixos-unstable,
+  home-manager-nixos-unstable,
+  nixpkgs-unstable,
+  home-manager-unstable,
+  darwin,
+  disko,
+  ...
+} @inputs:
 
 let
-  #unstablePkgsFor = system: final: prev: rec {
-  #  pkgsUnstable = import nixpkgs-unstable {
-  #    inherit system;
-  #    config.allowUnfree = true;
-  #  };
-  #};
-
-  commonModuleFor = system: hostName: let
-    #unstableOverlay = unstablePkgsFor system;
-  in { pkgs, ... }: {
-    nix.package = pkgs.lix;
-    nix.settings.experimental-features = "nix-command flakes repl-flake";
-    networking.hostName = hostName;
-
-    nixpkgs.config.allowUnfree = true;
-    #nixpkgs.overlays = [ unstableOverlay ];
+  inputsNixOS = {
+    inherit (inputs) disko apple-fonts nixos-hardware;
+    nixpkgs = nixpkgs-nixos-unstable;
+    home-manager = home-manager-nixos-unstable;
+  };
+  inputsOther = {
+    nixpkgs = nixpkgs-unstable;
+    home-manager = home-manager-unstable;
+  };
+  inputsDarwin = inputsOther // {
+    inherit (inputs) nix-darwin;
+  };
+  inputsHomeManager = inputsOther // {
+    inherit (inputs) nixGL;
   };
 
-  hmModule = {
+  commonModuleFor = system: hostName: { pkgs, ... }: {
+    nix.package = pkgs.lix;
+    nix.settings.experimental-features = "nix-command flakes repl-flake";
+    nixpkgs.config.allowUnfree = true;
+
+    networking.hostName = hostName;
+
     home-manager.useGlobalPkgs = true;
     home-manager.useUserPackages = true;
-    home-manager.sharedModules = [
-      { _module.args = { inherit inputs; }; }
-    ];
     home-manager.users.nhp = import ../home;
   };
 in {
-  nixos = { hostName, system, extra ? {} }: let
-    commonModule = commonModuleFor system hostName;
-  in nixpkgs.lib.nixosSystem {
-    system = system;
-    specialArgs = { inherit inputs; };
+  nixos = { hostName, system }: nixpkgs-nixos-unstable.lib.nixosSystem {
+    inherit system;
+    specialArgs = { inputs = inputsNixOS; };
     modules = [
       ../nixos
       ../hosts/${hostName}
       disko.nixosModules.disko
-      home-manager.nixosModules.home-manager
-      commonModule
-      hmModule
+      home-manager-nixos-unstable.nixosModules.home-manager
+      (commonModuleFor system hostName)
     ];
-  } // extra;
+  };
 
-  macos = { hostName, extra ? {} }: let
-    system = "aarch64-darwin";
-    commonModule = commonModuleFor system hostName;
-  in darwin.lib.darwinSystem {
+  macos = { hostName, system ? "aarch64-darwin" }: darwin.lib.darwinSystem {
     inherit system;
-    specialArgs = { inherit inputs; };
+    specialArgs = { inputs = inputsDarwin; };
     modules = [
       ../darwin
       ../hosts/${hostName}
-      home-manager.darwinModules.home-manager
-      commonModule
-      hmModule
+      home-manager-unstable.darwinModules.home-manager
+      (commonModuleFor system hostName)
     ];
-  } // extra;
+  };
 
-  home = { hostName, system }: home-manager.lib.homeManagerConfiguration {
-    pkgs = import nixpkgs { inherit system; };
-    extraSpecialArgs = { inherit inputs; };
+  home = { hostName, system }: home-manager-unstable.lib.homeManagerConfiguration {
+    pkgs = import nixpkgs-unstable { inherit system; };
+    extraSpecialArgs = { inputs = inputsHomeManager; };
     modules = [
       ../hosts/${hostName}
       ../home

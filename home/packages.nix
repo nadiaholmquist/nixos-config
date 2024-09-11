@@ -51,7 +51,7 @@ let
 
   linuxx86Packages = optionals isx86Linux (with pkgs; [
     # Swift language server. Technically available on ARM Linux but requires compiling Swift and that's slow.
-    sourcekit-lsp
+    #sourcekit-lsp
   ]);
 
   linuxPackages = optionals isLinux (with pkgs; [
