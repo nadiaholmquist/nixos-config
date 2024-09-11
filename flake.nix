@@ -39,33 +39,22 @@
     };
   };
 
-  outputs = { self, ... } @inputs: let
-    inherit (import ./lib/hosts.nix inputs) nixos macos home;
-  in {
-    nixosConfigurations = {
-      narshe = nixos {
-        hostName = "narshe";
-        system = "x86_64-linux";
-      };
-      nixarm = nixos { # NixOS aarch64 VM on Mac
-        hostName = "nixarm";
-        system = "aarch64-linux";
-      };
-    };
-    darwinConfigurations = {
-      studio = macos {
-        hostName = "studio";
-      };
-      nadiabook = macos {
-        hostName = "nadiabook";
-      };
+  outputs = { ... } @inputs: let
+    inherit (import ./lib/hosts.nix inputs) makeOutputs;
+  in makeOutputs {
+    nixos = {
+      narshe = {};
+      # NixOS aarch64 VM on Mac
+      nixarm = { system = "aarch64-linux"; };
     };
 
-    homeConfigurations = {
-      deck = home {
-        hostName = "deck";
-        system = "x86_64-linux";
-      };
+    darwin = {
+      studio = {};
+      nadiabook = {};
+    };
+
+    home = {
+      deck = {};
     };
   };
 }
