@@ -6,6 +6,10 @@
   # NOT safe on macOS.
   nix.settings.auto-optimise-store = false;
 
+  imports = [
+    ./fonts.nix
+  ];
+
   users = {
     users.nhp = {
       name = "nhp";

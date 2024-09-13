@@ -15,7 +15,7 @@
     fira
     # Some editors do not like variable TTF fonts, so use the regular one
     (fira-code.override { useVariableFont = false; })
-    fira-code-symbols
+    (nerdfonts.override { fonts = [ "FiraCode" ]; })
 
     apple.sf-pro
     apple.sf-compact

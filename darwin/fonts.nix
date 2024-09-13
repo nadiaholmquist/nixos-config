@@ -2,8 +2,10 @@
 
 {
   fonts.packages = [
-    (pkgs.nerdfonts.override.fonts [
-      "fira-code"
-    ])
+    (pkgs.nerdfonts.override {
+      fonts = [
+        "FiraCode"
+      ];
+    })
   ];
 }
