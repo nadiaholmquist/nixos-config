@@ -99,7 +99,7 @@ let
       mapAttrsToList (name: value: value // { inherit name; }) list
     ))
     flatten
-    (filter (config: config.type != "nixos"))
+    (filter (config: config.type != "nixos" && config.type != "home"))
     (groupBy (config: config.system))
     (mapAttrs (system: defs:
       listToAttrs (map (def: {
