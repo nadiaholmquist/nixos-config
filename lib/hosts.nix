@@ -105,7 +105,7 @@ let
       listToAttrs (map (def: {
         name = def.name;
         value = if def.type == "home" then
-          inputs.self."${def.type}Configurations"."${def.name}".config.home.activationPackage
+          inputs.self."${def.type}Configurations"."${def.name}".activationPackage
         else
           inputs.self."${def.type}Configurations"."${def.name}".config.system.build.toplevel;
       }) defs)
