@@ -4,6 +4,7 @@
   nixpkgs-unstable,
   home-manager-unstable,
   darwin,
+  nixos-wsl,
   disko,
   ...
 } @inputs:
@@ -18,6 +19,7 @@ let
     inherit (inputs) disko apple-fonts nixos-hardware;
     nixpkgs = nixpkgs-nixos-unstable;
     home-manager = home-manager-nixos-unstable;
+    nixos-wsl = nixos-wsl;
   };
   inputsOther = {
     nixpkgs = nixpkgs-unstable;
@@ -43,30 +45,33 @@ let
   };
 
   systemFuncs = {
-    nixos = { hostName, system }: nixpkgs-nixos-unstable.lib.nixosSystem {
+    nixos = { hostName, system, role }: let
+      roleModules = import ../nixos/role-modules.nix { inputs = inputsNixOS; };
+    in nixpkgs-nixos-unstable.lib.nixosSystem {
       inherit system;
       specialArgs = { inputs = inputsNixOS; };
       modules = [
-        ../nixos
-          ../hosts/${hostName}
-      disko.nixosModules.disko
+        ../hosts/${hostName}
+        disko.nixosModules.disko
         home-manager-nixos-unstable.nixosModules.home-manager
         (commonModuleFor system hostName)
-      ];
+      ]
+      ++ roleModules.common
+      ++ roleModules."${role}";
     };
 
-    darwin = { hostName, system }: darwin.lib.darwinSystem {
+    darwin = { hostName, system, ... }: darwin.lib.darwinSystem {
       inherit system;
       specialArgs = { inputs = inputsDarwin; };
       modules = [
         ../darwin
-          ../hosts/${hostName}
-      home-manager-unstable.darwinModules.home-manager
+        ../hosts/${hostName}
+        home-manager-unstable.darwinModules.home-manager
         (commonModuleFor system hostName)
       ];
     };
 
-    home = { hostName, system }: home-manager-unstable.lib.homeManagerConfiguration {
+    home = { hostName, system, ... }: home-manager-unstable.lib.homeManagerConfiguration {
       pkgs = import nixpkgs-unstable { inherit system; };
       extraSpecialArgs = { inputs = inputsHomeManager; };
       modules = [
@@ -78,6 +83,7 @@ let
 
   systemAttrs = type: name: def: {
     hostName = def.hostName or name;
+    role = def.role or "desktop";
     system = def.system or (
       if type == "darwin" then "aarch64-darwin" else "x86_64-linux"
     );

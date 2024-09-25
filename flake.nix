@@ -11,6 +11,11 @@
       inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
 
+    nixos-wsl = {
+      url = "github:nix-community/NixOS-WSL";
+      inputs.nixpkgs.follows = "nixpkgs-nixos-unstable";
+    };
+
     home-manager-nixos-unstable = {
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs-nixos-unstable";
@@ -46,6 +51,7 @@
       narshe = {};
       # NixOS aarch64 VM on Mac
       nixarm = { system = "aarch64-linux"; };
+      wsl = { role = "wsl"; };
     };
 
     darwin = {
