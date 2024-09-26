@@ -5,9 +5,12 @@
     kernelPackages = lib.mkDefault pkgs.linuxPackages_latest;
 
     loader = {
-      timeout = 0;
-      systemd-boot.enable = true;
-      systemd-boot.consoleMode = "max";
+      timeout = 15;
+      systemd-boot = {
+        enable = true;
+        consoleMode = "max";
+        configurationLimit = 5;
+      };
       efi.canTouchEfiVariables = true;
     };
 
