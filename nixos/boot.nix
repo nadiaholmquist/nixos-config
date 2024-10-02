@@ -15,8 +15,10 @@
         # Do not depend on entry in NVRAM to boot
         efiInstallAsRemovable = true;
         useOSProber = true;
+        default = "saved";
 
         splashImage = null;
+        backgroundColor = "#121212";
         theme = pkgs.sleek-grub-theme.override {
           withBanner = config.networking.hostName;
           withStyle = "dark";
