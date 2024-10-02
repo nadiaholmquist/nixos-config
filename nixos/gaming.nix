@@ -12,6 +12,9 @@ in {
       enable = true;
       extest.enable = true; # Steam Input on Wayland
       gamescopeSession.enable = true;
+      extraCompatPackages = [
+        pkgs.proton-ge-bin
+      ];
     };
 
     programs.gamescope.enable = true;

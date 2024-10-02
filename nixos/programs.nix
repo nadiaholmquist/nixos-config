@@ -17,7 +17,7 @@
 
     stress-ng
   ]) ++ lib.optionals pkgs.hostPlatform.isx86_64 (with pkgs; [
-    wineWow64Packages.full
+    wineWow64Packages.unstableFull
     cpu-x
   ]);
 
