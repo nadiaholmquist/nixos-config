@@ -24,6 +24,7 @@ let
     mpv
     audacity
     vlc
+    qbittorrent
 
     # Dev programs
     jetbrains.clion
