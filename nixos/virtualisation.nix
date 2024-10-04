@@ -37,6 +37,9 @@ in {
         configuration = { pkgs, ... }: {
           boot.kernelPackages = lib.mkForce pkgs.linuxPackages;
           virtualisation.vmware.host.enable = true;
+          virtualisation.vmware.host.package = pkgs.vmware-workstation.override {
+            enableMacOSGuests = true;
+          };
         };
       };
     })
