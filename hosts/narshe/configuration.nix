@@ -16,7 +16,8 @@
     dotfiles.zshPromptColor = "cyan";
   };
 
-  boot.kernelPackages = pkgs.linuxPackages_6_10;
+  # Use Linux LTS
+  boot.kernelPackages = pkgs.linuxPackages;
 
   boot.binfmt.emulatedSystems = [ "aarch64-linux" "x86_64-windows" ];
 }
