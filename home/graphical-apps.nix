@@ -15,6 +15,7 @@ let
     cider # Apple Music
     jetbrains-toolbox
     zenmonitor
+    via
   ]);
 
   linuxPackages = optionals isLinux (with pkgs; [
@@ -22,7 +23,6 @@ let
     mpv
     filezilla
     pinta
-    via
   ]);
 
   darwinPackages = optionals isDarwin (with pkgs; [
