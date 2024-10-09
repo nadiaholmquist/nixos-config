@@ -8,7 +8,7 @@ let
       install_url = "https://addons.mozilla.org/firefox/downloads/latest/${name}/latest.xpi";
       installation_mode = "force_installed";
     }) exts;
-in lib.mkIf config.dotfiles.enableHomeGuiApps {
+in lib.mkIf (config.dotfiles.enableHomeGuiApps && !pkgs.stdenv.isDarwin) {
   programs.firefox = {
     enable = true;
     nativeMessagingHosts = with pkgs; [ kdePackages.plasma-browser-integration ];

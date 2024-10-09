@@ -6,7 +6,7 @@
   home-manager.users.nhp = {
     home.stateVersion = "24.05";
     dotfiles.zshPromptColor = "green";
-    dotfiles.enableGaming = false;
+    dotfiles.enableGaming = true;
   };
 
   imports = [

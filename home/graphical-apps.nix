@@ -8,6 +8,7 @@
 let
   inherit (lib) optionals mkIf;
   inherit (pkgs.hostPlatform) isx86_64 isLinux isDarwin;
+  inherit (config.dotfiles) enableHomeGuiApps enableGaming;
 
   x86_64Packages = optionals isx86_64 (with pkgs; [
     bitwarden-desktop
@@ -16,14 +17,24 @@ let
     zenmonitor
   ]);
 
+  linuxPackages = optionals isLinux (with pkgs; [
+    vlc
+    mpv
+    filezilla
+    pinta
+    via
+  ]);
+
+  darwinPackages = optionals isDarwin (with pkgs; [
+    iterm2
+    monitorcontrol
+    utm
+  ]);
+
   commonPackages = with pkgs; [
     vesktop # Discord client
     element-desktop
-
-    # Graphical apps
-    mpv
     audacity
-    vlc
     qbittorrent
 
     # Dev programs
@@ -33,17 +44,18 @@ let
     neovide
   ];
 
-  gamingPackages = optionals config.dotfiles.enableGaming (with pkgs; [
+  gamingPackages = optionals enableGaming (with pkgs; [
     prismlauncher # Minecraft
 
     # Emulators
-    cemu
     dolphin-emu-beta
+    nanoboyadvance
+    melonDS
+  ]) ++ optionals (enableGaming && isLinux) (with pkgs; [
+    cemu
     duckstation
     ares
-    nanoboyadvance
     mgba
-    melonDS
     (retroarch.override {
       cores = with libretro; [
         mesen bsnes snes9x genesis-plus-gx mupen64plus
@@ -53,7 +65,10 @@ let
     ryujinx
   ]);
 
-  allPackages = commonPackages ++ x86_64Packages ++ gamingPackages;
-in mkIf config.dotfiles.enableHomeGuiApps {
+  allPackages =
+    commonPackages ++ linuxPackages ++ darwinPackages
+    ++ x86_64Packages
+    ++ gamingPackages;
+in mkIf enableHomeGuiApps {
   home.packages = allPackages;
 }
