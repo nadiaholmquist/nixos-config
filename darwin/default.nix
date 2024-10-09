@@ -8,6 +8,7 @@
 
   imports = [
     ./fonts.nix
+    ./app-setup.nix
   ];
 
   users = {

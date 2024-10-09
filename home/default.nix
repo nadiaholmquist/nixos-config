@@ -15,7 +15,7 @@
     enableHomeGuiApps = mkOption {
       type = types.bool;
       description = "Let Home Manager install graphical apps.";
-      default = !(config.targets.genericLinux.enable || pkgs.stdenv.isDarwin);
+      default = !config.targets.genericLinux.enable;
     };
   };
 
@@ -43,5 +43,6 @@
     ./appearance.nix
     ./vscode.nix
     ./development.nix
+    ./darwin-apps.nix
   ];
 }
