@@ -1,11 +1,6 @@
-{ pkgs, lib, config, ... }:
+{ lib, config, ... }:
 
 {
-  environment.systemPackages = [
-    pkgs.audacity
-    pkgs.iterm2
-  ];
-
   system.activationScripts.applications.text = lib.mkForce /*sh*/ ''
     # Set up applications.
     echo "setting up /Applications/Nix Apps..." >&2
