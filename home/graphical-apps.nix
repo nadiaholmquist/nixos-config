@@ -26,7 +26,6 @@ let
   ]);
 
   darwinPackages = optionals isDarwin (with pkgs; [
-    iterm2
     monitorcontrol
     utm
   ]);
