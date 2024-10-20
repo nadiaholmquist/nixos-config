@@ -64,9 +64,18 @@ in {
       hardware.amdgpu.opencl.enable = true;
       hardware.amdgpu.initrd.enable = true;
 
-      # HIP workaround from the wiki
-      systemd.tmpfiles.rules = [
-        "L+    /opt/rocm/hip   -    -    -     -    ${pkgs.rocmPackages.clr}"
+      # ROCm workaround from the wiki
+      systemd.tmpfiles.rules = let
+        rocmEnv = pkgs.symlinkJoin {
+          name = "rocm-combined";
+          paths = with pkgs.rocmPackages; [
+            rocblas
+            hipblas
+            clr
+          ];
+      };
+      in [
+        "L+    /opt/rocm   -    -    -     -    ${rocmEnv}"
       ];
 
       #hardware.amdgpu.amdvlk.enable = true;
