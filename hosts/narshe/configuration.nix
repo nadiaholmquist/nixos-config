@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ ... }:
 
 {
   system.stateVersion = "24.05";
@@ -16,9 +16,6 @@
     home.stateVersion = "24.05";
     dotfiles.zshPromptColor = "cyan";
   };
-
-  # Use Linux LTS
-  boot.kernelPackages = pkgs.linuxPackages;
 
   boot.binfmt.emulatedSystems = [ "aarch64-linux" "x86_64-windows" ];
 }
