@@ -34,7 +34,7 @@ let
     deploy-rs
 
     # Dev CLI
-    cmake
+    stdenv.cc
     ninja
 
     # Language servers and such
@@ -47,6 +47,7 @@ let
 
   macPackages = optionals isDarwin (with pkgs; [
     gnumake
+    cmake
   ]);
 
   linuxx86Packages = optionals isx86Linux (with pkgs; [
@@ -62,6 +63,7 @@ let
     distrobox
 
     # Development
+    cmakeWithGui
     gdb
     lldb
   ]);

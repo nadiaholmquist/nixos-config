@@ -10,9 +10,6 @@
     killall
     rsync
 
-    gcc
-    cmake
-
     alsa-utils
 
     stress-ng
