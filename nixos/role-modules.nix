@@ -6,6 +6,7 @@
     ./locale.nix
     ./users.nix
     ./vm-variant.nix
+    ./overlay.nix
     ./programs.nix
   ];
 

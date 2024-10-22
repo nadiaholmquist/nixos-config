@@ -7,7 +7,8 @@
     dejavu_fonts
     noto-fonts
     noto-fonts-color-emoji
-    noto-fonts-cjk
+    noto-fonts-cjk-sans
+    noto-fonts-cjk-serif
     corefonts
     vistafonts
     inter
