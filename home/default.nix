@@ -1,23 +1,7 @@
-{ lib, pkgs, config, osConfig ? null, ... }:
+{ lib, pkgs, config, ... }:
 
 {
   # TODO find out if there's a better way to "inherit" an option
-  options.dotfiles = let
-    inherit (lib) mkOption types;
-  in {
-    enableGaming = mkOption {
-      type = types.bool;
-      description = "Enable gaming-related packages.";
-      default =
-        if osConfig != null then osConfig.dotfiles.enableGaming
-        else false;
-    };
-    enableHomeGuiApps = mkOption {
-      type = types.bool;
-      description = "Let Home Manager install graphical apps.";
-      default = !config.targets.genericLinux.enable;
-    };
-  };
 
   config = let
     username = config.home.username;

@@ -7,6 +7,7 @@
     home.stateVersion = "24.05";
     dotfiles.zshPromptColor = "green";
     dotfiles.enableGaming = false;
+    dotfiles.enableLargeApps = false;
   };
 
   #imports = [

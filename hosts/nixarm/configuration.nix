@@ -16,5 +16,6 @@
   home-manager.users.nhp = {
     home.stateVersion = "24.05";
     dotfiles.zshPromptColor = "magenta";
+    dotfiles.enableLargeApps = false;
   };
 }
