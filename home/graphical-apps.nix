@@ -34,7 +34,6 @@ in {
     [
       audacity
       qbittorrent
-      neovide
     ]
 
     (optionals enableLargeApps [
@@ -46,7 +45,6 @@ in {
       jetbrains.clion
       jetbrains.idea-ultimate
       jetbrains.rust-rover
-      neovide
     ])
 
     (optionals (isLinux && enableLargeApps) [
@@ -58,6 +56,9 @@ in {
       mpv
       filezilla
       pinta
+
+      # Broken with Darwin refactor, move this one back too when fixed!
+      neovide
     ])
 
     (optionals (isLinux && isx86_64) [
@@ -74,12 +75,12 @@ in {
     ])
 
     (optionals enableGaming [
-      #prismlauncher # Minecraft
+      prismlauncher # Minecraft
 
       # Emulators
       dolphin-emu-beta
       nanoboyadvance
-      #melonDS
+      melonDS
     ])
 
     (optionals (enableGaming && isLinux) [
