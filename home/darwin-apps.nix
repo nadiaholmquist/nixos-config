@@ -17,7 +17,7 @@
       $DRY_RUN_CMD rm -rf "$nix_apps"
       $DRY_RUN_CMD mkdir -p "$nix_apps"
 
-      $DRY_RUN_CMD find ${apps}/Applications -maxdepth 1 -type l | while read app; do
+      $DRY_RUN_CMD find ${apps}/Applications -maxdepth 1 -type l | while read -r app; do
         app_name="$(basename "$app")"
         mkdir "$nix_apps/$app_name"
         ln -s "$app/Contents" "$nix_apps/$app_name/Contents"

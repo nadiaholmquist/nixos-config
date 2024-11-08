@@ -9,7 +9,7 @@
     rm -rf "$nix_apps"
     mkdir -p "$nix_apps"
 
-    find ${config.system.build.applications}/Applications -maxdepth 1 -type l | while read app; do
+    find ${config.system.build.applications}/Applications -maxdepth 1 -type l | while read -r app; do
       appname="$(basename "$app")"
       mkdir "$nix_apps/$appname"
       ln -s "$app/Contents" "$nix_apps/$appname/Contents"
