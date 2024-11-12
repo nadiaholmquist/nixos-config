@@ -84,16 +84,21 @@ in {
     ])
 
     (optionals (enableGaming && isLinux) [
+      gzdoom
+
+      # Emulators
       cemu
       duckstation
       ares
       mgba
+      lime3ds
       (retroarch.override {
         cores = with libretro; [
           mesen bsnes snes9x genesis-plus-gx mupen64plus
         ];
       })
       pcsx2
+      ppsspp
       ryujinx
     ])
   ]);
