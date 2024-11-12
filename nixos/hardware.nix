@@ -27,7 +27,8 @@ in {
         alsa.enable = true;
         alsa.support32Bit = true;
         pulse.enable = true;
-        jack.enable = true;
+        # Sets LD_LIBRARY_PATH globally, breaks stuff
+        #jack.enable = true;
         wireplumber.enable = true;
       };
 
