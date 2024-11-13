@@ -1,6 +1,9 @@
 { config, pkgs, lib, ... }:
 
-{
+let
+  inherit (lib) optional;
+  isDarwin = pkgs.hostPlatform.isDarwin;
+in {
   options.dotfiles.zshPromptColor = with lib; mkOption {
     type = types.str;
     default = "green";
@@ -24,9 +27,7 @@
       ];
 
       shellAliases = {
-        # Use GNU coreutils's ls even on macOS
-        # It lays out the file list a bit nicer and follows LS_COLORS
-        "ls" = "${pkgs.coreutils}/bin/ls --color=auto";
+        ls = (if isDarwin then "gls" else "ls") + " --color=auto";
       };
 
       initExtra = ''
@@ -54,7 +55,9 @@
     home.packages = with pkgs; [
       zsh-completions
       nix-zsh-completions
-    ];
+    ]
+    # 'g'-prefixed GNU coreutils
+    ++ optional isDarwin coreutils-prefixed;
 
     programs.dircolors.enable = true;
   };
