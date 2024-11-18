@@ -15,6 +15,7 @@ let
     btop
     tmux
     calc
+    ncdu
 
     # Archives
     zip
@@ -60,9 +61,6 @@ let
     usbutils
     pciutils
     distrobox
-
-    # Broken with darwin refactor currently, move it back
-    ncdu
 
     # Development
     cmakeWithGui

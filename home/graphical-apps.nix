@@ -34,12 +34,11 @@ in {
     [
       audacity
       qbittorrent
+      neovide
     ]
 
     (optionals enableLargeApps [
       vesktop # Discord client
-      audacity
-      qbittorrent
 
       # Dev programs
       jetbrains.clion
@@ -56,9 +55,6 @@ in {
       mpv
       filezilla
       pinta
-
-      # Broken with Darwin refactor, move this one back too when fixed!
-      neovide
     ])
 
     (optionals (isLinux && isx86_64) [
@@ -71,6 +67,7 @@ in {
 
     (optionals isDarwin [
       monitorcontrol
+      mpv-unwrapped # wrapped `mpv` has a broken app bundle
       utm
     ])
 
