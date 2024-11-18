@@ -32,9 +32,8 @@ let
     inherit (inputs) nixGL;
   };
 
-  commonModuleFor = system: hostName: { pkgs, ... }: {
-    nix.package = pkgs.lix;
-    nix.settings.experimental-features = "nix-command flakes repl-flake";
+  commonModuleFor = system: hostName: { ... }: {
+    nix.settings.experimental-features = "nix-command flakes";
     nixpkgs.config.allowUnfree = true;
 
     networking.hostName = hostName;
