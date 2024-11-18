@@ -1,10 +1,12 @@
-{ ... }:
+{ pkgs, lib, ... }:
 
 {
   nixpkgs.overlays = [
     (final: prev: {
-      # Work around node-env build failure
-      utillinux = null;
+      # Temporary workaround of unconditionally included cctools which only builds on Darwin
+      neovide = prev.neovide.override {
+        cctools.libtool = pkgs.runCommandNoCC "empty-drv" {} "mkdir $out";
+      };
     })
   ];
 }
