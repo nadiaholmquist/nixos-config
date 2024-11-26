@@ -66,7 +66,6 @@ in {
     ])
 
     (optionals isDarwin [
-      monitorcontrol
       mpv-unwrapped # wrapped `mpv` has a broken app bundle
       utm
     ])
