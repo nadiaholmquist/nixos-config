@@ -19,7 +19,7 @@ let
 
     # Archives
     zip
-    p7zip-rar
+    p7zip
     unzip
 
     # Nix stuff
@@ -34,7 +34,6 @@ let
     deploy-rs
 
     # Dev CLI
-    stdenv.cc
     ninja
 
     # Language servers and such
@@ -63,6 +62,7 @@ let
     distrobox
 
     # Development
+    stdenv.cc
     cmakeWithGui
     gdb
     lldb
