@@ -1,4 +1,4 @@
-{ pkgs, inputs, ...}:
+{ pkgs, lib, inputs, ...}:
 
 {
   fonts.packages = with pkgs; let
@@ -24,7 +24,7 @@
   ];
 
   fonts.fontconfig = {
-    subpixel.rgba = "rgb";
+    subpixel.rgba = lib.mkDefault "rgb";
     defaultFonts.monospace = ["Fira Mono"];
     # Need to figure out how to make this use SF Pro Display at and above 20pt. Use default for now.
     #defaultFonts.sansSerif = ["SF Pro Text"];

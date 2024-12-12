@@ -17,5 +17,7 @@
     dotfiles.zshPromptColor = "cyan";
   };
 
+  fonts.fontconfig.subpixel.rgba = "none";
+
   boot.binfmt.emulatedSystems = [ "aarch64-linux" "x86_64-windows" ];
 }
