@@ -88,11 +88,13 @@ in {
       ares
       mgba
       lime3ds
-      (retroarch.override {
-        cores = with libretro; [
-          mesen bsnes snes9x genesis-plus-gx mupen64plus
-        ];
-      })
+      (retroarch.withCores (l: with l; [
+          mesen
+          bsnes
+          snes9x
+          genesis-plus-gx
+          mupen64plus
+      ]))
       pcsx2
       ppsspp
       ryujinx
