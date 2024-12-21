@@ -9,6 +9,7 @@
   imports = [
     ./fonts.nix
     ./app-setup.nix
+    ./nh.nix
   ];
 
   users = {

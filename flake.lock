@@ -149,6 +149,26 @@
         "type": "github"
       }
     },
+    "nh": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs-unstable"
+        ]
+      },
+      "locked": {
+        "lastModified": 1733912267,
+        "narHash": "sha256-I3ubew5jt8YZ27AOtIodRAYo0aew6wxY8UkWCSqz6B4=",
+        "owner": "viperML",
+        "repo": "nh",
+        "rev": "6a69a145b0c7dbd5616bbded512b8bf8b5d2f8a4",
+        "type": "github"
+      },
+      "original": {
+        "owner": "viperML",
+        "repo": "nh",
+        "type": "github"
+      }
+    },
     "nixGL": {
       "inputs": {
         "flake-utils": "flake-utils",
@@ -246,6 +266,7 @@
         "disko": "disko",
         "home-manager-nixos-unstable": "home-manager-nixos-unstable",
         "home-manager-unstable": "home-manager-unstable",
+        "nh": "nh",
         "nixGL": "nixGL",
         "nixos-hardware": "nixos-hardware",
         "nixos-wsl": "nixos-wsl",

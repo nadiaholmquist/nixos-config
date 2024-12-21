@@ -26,7 +26,7 @@ let
     home-manager = home-manager-unstable;
   };
   inputsDarwin = inputsOther // {
-    inherit (inputs) nix-darwin;
+    inherit (inputs) nix-darwin nh;
   };
   inputsHomeManager = inputsOther // {
     inherit (inputs) nixGL;
