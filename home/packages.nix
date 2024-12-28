@@ -35,13 +35,6 @@ let
 
     # Dev CLI
     ninja
-
-    # Language servers and such
-    lua-language-server # For neovim configuration
-    clang-tools
-    nixd
-    cmake-language-server
-    tree-sitter
   ];
 
   macPackages = optionals isDarwin (with pkgs; [
