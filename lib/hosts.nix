@@ -11,9 +11,11 @@
 
 let
   inherit (builtins) filter groupBy listToAttrs;
-  inherit (nixpkgs-unstable.lib) pipe;
-  inherit (nixpkgs-unstable.lib.lists) flatten;
-  inherit (nixpkgs-unstable.lib.attrsets) mapAttrs mapAttrs' mapAttrsToList;
+  inherit (nixpkgs-unstable) lib;
+  inherit (lib) pipe;
+  inherit (lib.lists) flatten;
+  inherit (lib.attrsets) mapAttrs mapAttrs' mapAttrsToList;
+  inherit (import ./overlays.nix { inherit lib; }) overlaysModuleFor;
 
   inputsNixOS = {
     inherit (inputs) disko apple-fonts nixos-hardware;
@@ -50,13 +52,14 @@ let
       inherit system;
       specialArgs = { inputs = inputsNixOS; };
       modules = [
-        ../hosts/${hostName}
         disko.nixosModules.disko
         home-manager-nixos-unstable.nixosModules.home-manager
         (commonModuleFor system hostName)
-      ]
-      ++ roleModules.common
-      ++ roleModules."${role}";
+        (overlaysModuleFor ["nixos" system hostName])
+        roleModules.common
+        roleModules."${role}"
+        ../hosts/${hostName}
+      ];
     };
 
     darwin = { hostName, system, ... }: darwin.lib.darwinSystem {
@@ -67,6 +70,7 @@ let
         ../hosts/${hostName}
         home-manager-unstable.darwinModules.home-manager
         (commonModuleFor system hostName)
+        (overlaysModuleFor ["darwin" system hostName])
       ];
     };
 
@@ -76,6 +80,7 @@ let
       modules = [
         ../hosts/${hostName}
         ../home
+        (overlaysModuleFor ["home" system hostName])
       ];
     };
   };
