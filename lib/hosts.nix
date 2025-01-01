@@ -56,10 +56,10 @@ let
         home-manager-nixos-unstable.nixosModules.home-manager
         (commonModuleFor system hostName)
         (overlaysModuleFor ["nixos" system hostName])
-        roleModules.common
-        roleModules."${role}"
         ../hosts/${hostName}
-      ];
+      ]
+      ++ roleModules.common
+      ++ roleModules."${role}";
     };
 
     darwin = { hostName, system, ... }: darwin.lib.darwinSystem {
