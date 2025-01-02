@@ -14,6 +14,11 @@ in {
       type = with types; nullOr (enum ["amd"]);
       default = null;
     };
+    dotfiles.enableROCm = mkOption {
+      type = types.bool;
+      description = "Enable AMD ROCm";
+      default = false;
+    };
   };
 
   config = mkMerge [
@@ -62,8 +67,15 @@ in {
 
     # AMD GPU specific settings
     (mkIf (config.dotfiles.gpuSupport == "amd") {
-      hardware.amdgpu.opencl.enable = true;
       hardware.amdgpu.initrd.enable = true;
+
+      #hardware.amdgpu.amdvlk.enable = true;
+      # Default to RADV
+      #environment.variables.AMD_VULKAN_ICD = "RADV";
+    })
+
+    (mkIf config.dotfiles.enableROCm {
+      hardware.amdgpu.opencl.enable = true;
 
       # ROCm workaround from the wiki
       systemd.tmpfiles.rules = let
@@ -77,15 +89,6 @@ in {
       };
       in [
         "L+    /opt/rocm   -    -    -     -    ${rocmEnv}"
-      ];
-
-      #hardware.amdgpu.amdvlk.enable = true;
-      # Default to RADV
-      #environment.variables.AMD_VULKAN_ICD = "RADV";
-
-      # Occasionally useful utils
-      environment.defaultPackages = with pkgs; [
-        vulkan-tools glxinfo libva-utils
       ];
     })
 
