@@ -1,7 +1,7 @@
 { lib ? (import <nixpkgs> {}).lib, ... }:
 
 let
-  inherit (builtins) readDir filter attrNames match length;
+  inherit (builtins) readDir filter attrNames match length isFunction;
   inherit (lib) filterAttrs intersectLists;
 
   overlaysDir = readDir ../overlays;
@@ -14,12 +14,16 @@ let
 
   filterOverlays = tags: filter
     (ov:
-      if builtins.isFunction ov then ov
+      if isFunction ov then true
       else length (intersectLists ov.targets tags) != 0)
     allOverlays;
 
 in rec {
-  overlaysFor = tags: map (ov: ov.overlay) (filterOverlays tags);
+  overlaysFor = tags: map
+    (ov:
+      if isFunction ov then ov
+      else ov.overlay)
+    (filterOverlays tags);
   overlaysModuleFor = tags: {
     nixpkgs.overlays = overlaysFor tags;
   };
