@@ -17,6 +17,9 @@
     # Some editors do not like variable TTF fonts, so use the regular one
     (fira-code.override { useVariableFont = false; })
     nerd-fonts.fira-code
+    jetbrains-mono
+    nerd-fonts.jetbrains-mono
+    cascadia-code
 
     apple.sf-pro
     apple.sf-compact
