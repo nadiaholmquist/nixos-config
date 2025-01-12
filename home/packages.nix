@@ -21,6 +21,11 @@ let
     zip
     p7zip
     unzip
+    unrar
+    gzip
+    lz4
+    xz
+    zstd
 
     # Nix stuff
     nixpkgs-fmt
