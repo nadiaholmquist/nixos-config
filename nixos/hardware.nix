@@ -75,6 +75,8 @@ in {
     })
 
     (mkIf config.dotfiles.enableROCm {
+      nixpkgs.config.rocmSupport = true;
+
       hardware.amdgpu.opencl.enable = true;
 
       # ROCm workaround from the wiki
