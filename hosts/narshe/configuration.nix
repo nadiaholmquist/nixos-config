@@ -10,8 +10,8 @@
   dotfiles.enableROCm = true;
   dotfiles.enableGaming = true;
   dotfiles.enableVirtualisation = true;
-  dotfiles.enableVMWare = true;
-  dotfiles.autoLogin = true;
+  dotfiles.enableVMWare = false;
+  dotfiles.autoLogin = false;
 
   home-manager.users.nhp = {
     home.stateVersion = "24.05";
