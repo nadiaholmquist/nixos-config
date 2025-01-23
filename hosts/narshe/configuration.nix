@@ -7,7 +7,7 @@
 
   dotfiles.enableFanControl = true;
   dotfiles.gpuSupport = "amd";
-  dotfiles.enableROCm = true;
+  dotfiles.enableROCm = false;
   dotfiles.enableGaming = true;
   dotfiles.enableVirtualisation = true;
   dotfiles.enableVMWare = false;
