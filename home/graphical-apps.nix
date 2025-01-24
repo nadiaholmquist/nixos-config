@@ -39,6 +39,7 @@ in {
 
     (optionals enableLargeApps [
       vesktop # Discord client
+      cinny-desktop # Matrix
 
       # Dev programs
       jetbrains.clion
