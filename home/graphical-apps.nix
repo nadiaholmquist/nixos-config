@@ -69,6 +69,7 @@ in {
     (optionals isDarwin [
       mpv-unwrapped # wrapped `mpv` has a broken app bundle
       utm
+      qemu
     ])
 
     (optionals enableGaming [
