@@ -10,6 +10,7 @@
     ./fonts.nix
     ./app-setup.nix
     ./nh.nix
+    ../common/builders.nix
   ];
 
   users = {
