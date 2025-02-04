@@ -1,8 +1,7 @@
 {
   nixpkgs-nixos-unstable,
-  home-manager-nixos-unstable,
   nixpkgs-unstable,
-  home-manager-unstable,
+  home-manager,
   darwin,
   nixos-wsl,
   disko,
@@ -15,17 +14,18 @@ let
   inherit (lib) pipe;
   inherit (lib.lists) flatten;
   inherit (lib.attrsets) mapAttrs mapAttrs' mapAttrsToList;
+
   inherit (import ./overlays.nix { inherit lib; }) overlaysModuleFor;
+  roleModules = import ../nixos/role-modules.nix { inputs = inputsNixOS; };
 
   inputsNixOS = {
-    inherit (inputs) disko apple-fonts nixos-hardware;
+    inherit (inputs) home-manager disko apple-fonts nixos-hardware;
     nixpkgs = nixpkgs-nixos-unstable;
-    home-manager = home-manager-nixos-unstable;
     nixos-wsl = nixos-wsl;
   };
   inputsOther = {
+    inherit (inputs) home-manager;
     nixpkgs = nixpkgs-unstable;
-    home-manager = home-manager-unstable;
   };
   inputsDarwin = inputsOther // {
     inherit (inputs) nix-darwin nh;
@@ -45,15 +45,15 @@ let
     home-manager.users.nhp = import ../home;
   };
 
+  homePkgs.x86_64-linux = import nixpkgs-unstable { system = "x86_64-linux"; };
+
   systemFuncs = {
-    nixos = { hostName, system, role }: let
-      roleModules = import ../nixos/role-modules.nix { inputs = inputsNixOS; };
-    in nixpkgs-nixos-unstable.lib.nixosSystem {
+    nixos = { hostName, system, role }: nixpkgs-nixos-unstable.lib.nixosSystem {
       inherit system;
       specialArgs = { inputs = inputsNixOS; };
       modules = [
         disko.nixosModules.disko
-        home-manager-nixos-unstable.nixosModules.home-manager
+        home-manager.nixosModules.home-manager
         (commonModuleFor system hostName)
         (overlaysModuleFor ["nixos" system hostName])
         ../hosts/${hostName}
@@ -68,14 +68,14 @@ let
       modules = [
         ../darwin
         ../hosts/${hostName}
-        home-manager-unstable.darwinModules.home-manager
+        home-manager.darwinModules.home-manager
         (commonModuleFor system hostName)
         (overlaysModuleFor ["darwin" system hostName])
       ];
     };
 
-    home = { hostName, system, ... }: home-manager-unstable.lib.homeManagerConfiguration {
-      pkgs = import nixpkgs-unstable { inherit system; };
+    home = { hostName, system, ... }: home-manager.lib.homeManagerConfiguration {
+      pkgs = homePkgs."${system}";
       extraSpecialArgs = { inputs = inputsHomeManager; };
       modules = [
         ../hosts/${hostName}

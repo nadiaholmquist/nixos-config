@@ -91,38 +91,18 @@
         "type": "github"
       }
     },
-    "home-manager-nixos-unstable": {
-      "inputs": {
-        "nixpkgs": [
-          "nixpkgs-nixos-unstable"
-        ]
-      },
-      "locked": {
-        "lastModified": 1738275749,
-        "narHash": "sha256-PM+cGduJ05EZ+YXulqAwUFjvfKpPmW080mcuN6R1POw=",
-        "owner": "nix-community",
-        "repo": "home-manager",
-        "rev": "a8159195bfaef3c64df75d3b1e6a68d49d392be9",
-        "type": "github"
-      },
-      "original": {
-        "owner": "nix-community",
-        "repo": "home-manager",
-        "type": "github"
-      }
-    },
-    "home-manager-unstable": {
+    "home-manager": {
       "inputs": {
         "nixpkgs": [
           "nixpkgs-unstable"
         ]
       },
       "locked": {
-        "lastModified": 1738275749,
-        "narHash": "sha256-PM+cGduJ05EZ+YXulqAwUFjvfKpPmW080mcuN6R1POw=",
+        "lastModified": 1738667255,
+        "narHash": "sha256-sMMQb9NydZqQ/MvvtPp+Ny0W9P0Jk0moU7SrTBlO5Vo=",
         "owner": "nix-community",
         "repo": "home-manager",
-        "rev": "a8159195bfaef3c64df75d3b1e6a68d49d392be9",
+        "rev": "7abcf59a365430b36f84eaa452a466b11e469e33",
         "type": "github"
       },
       "original": {
@@ -245,8 +225,7 @@
         "apple-fonts": "apple-fonts",
         "darwin": "darwin",
         "disko": "disko",
-        "home-manager-nixos-unstable": "home-manager-nixos-unstable",
-        "home-manager-unstable": "home-manager-unstable",
+        "home-manager": "home-manager",
         "nh": "nh",
         "nixGL": "nixGL",
         "nixos-hardware": "nixos-hardware",

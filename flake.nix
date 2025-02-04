@@ -16,12 +16,7 @@
       inputs.nixpkgs.follows = "nixpkgs-nixos-unstable";
     };
 
-    home-manager-nixos-unstable = {
-      url = "github:nix-community/home-manager";
-      inputs.nixpkgs.follows = "nixpkgs-nixos-unstable";
-    };
-
-    home-manager-unstable = {
+    home-manager = {
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
