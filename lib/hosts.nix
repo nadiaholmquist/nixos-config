@@ -1,41 +1,29 @@
 {
-  nixpkgs-nixos-unstable,
-  nixpkgs-unstable,
+  self,
+  nixpkgs,
+  nixpkgs-nixos,
   home-manager,
   darwin,
-  nixos-wsl,
   disko,
   ...
 } @inputs:
 
 let
-  inherit (builtins) filter groupBy listToAttrs;
-  inherit (nixpkgs-unstable) lib;
-  inherit (lib) pipe;
+  inherit (builtins) filter groupBy listToAttrs attrValues;
+  inherit (nixpkgs) lib;
+  inherit (lib) assertMsg;
   inherit (lib.lists) flatten;
   inherit (lib.attrsets) mapAttrs mapAttrs' mapAttrsToList;
 
   inherit (import ./overlays.nix { inherit lib; }) overlaysModuleFor;
   roleModules = import ../nixos/role-modules.nix { inputs = inputsNixOS; };
 
-  inputsNixOS = {
-    inherit (inputs) home-manager disko apple-fonts nixos-hardware;
-    nixpkgs = nixpkgs-nixos-unstable;
-    nixos-wsl = nixos-wsl;
-  };
-  inputsOther = {
-    inherit (inputs) home-manager;
-    nixpkgs = nixpkgs-unstable;
-  };
-  inputsDarwin = inputsOther // {
-    inherit (inputs) nix-darwin nh;
-  };
-  inputsHomeManager = inputsOther // {
-    inherit (inputs) nixGL;
+  inputsNixOS = inputs // {
+    nixpkgs = nixpkgs-nixos;
   };
 
   commonModuleFor = system: hostName: { ... }: {
-    nix.settings.experimental-features = "nix-command flakes";
+    nix.settings.experimental-features = "nix-command flakes pipe-operators";
     nixpkgs.config.allowUnfree = true;
 
     networking.hostName = hostName;
@@ -45,10 +33,10 @@ let
     home-manager.users.nhp = import ../home;
   };
 
-  homePkgs.x86_64-linux = import nixpkgs-unstable { system = "x86_64-linux"; };
+  homePkgs.x86_64-linux = import nixpkgs { system = "x86_64-linux"; };
 
   systemFuncs = {
-    nixos = { hostName, system, role }: nixpkgs-nixos-unstable.lib.nixosSystem {
+    nixos = { hostName, system, role, ... }: nixpkgs-nixos.lib.nixosSystem {
       inherit system;
       specialArgs = { inputs = inputsNixOS; };
       modules = [
@@ -64,7 +52,7 @@ let
 
     darwin = { hostName, system, ... }: darwin.lib.darwinSystem {
       inherit system;
-      specialArgs = { inputs = inputsDarwin; };
+      specialArgs = { inherit inputs; };
       modules = [
         ../darwin
         ../hosts/${hostName}
@@ -76,7 +64,7 @@ let
 
     home = { hostName, system, ... }: home-manager.lib.homeManagerConfiguration {
       pkgs = homePkgs."${system}";
-      extraSpecialArgs = { inputs = inputsHomeManager; };
+      extraSpecialArgs = { inherit inputs; };
       modules = [
         ../hosts/${hostName}
         ../home
@@ -86,6 +74,7 @@ let
   };
 
   systemAttrs = type: name: def: {
+    inherit type;
     hostName = def.hostName or name;
     role = def.role or "desktop";
     system = def.system or (
@@ -93,38 +82,42 @@ let
     );
   };
 
-  makeSystem = type: name: def: systemFuncs."${type}" (systemAttrs type name def);
+  applySystemAttrs =
+    mapAttrs (type:
+      mapAttrs (systemAttrs type)
+    );
 
-  makeSystems = defs: mapAttrs' (type: value: {
+  makeSystems =
+    mapAttrs' (type: systems: {
       name = type + "Configurations";
-      value = mapAttrs (makeSystem type) value;
-    }) defs;
+      value = mapAttrs (_: systemFuncs."${type}") systems;
+    });
 
-  makeChecks = defs: pipe defs [
-    (mapAttrsToList (type: systems:
-      mapAttrs (name: value:
-        (systemAttrs type name value) // { inherit type; }
-      ) systems))
-    (map (list:
-      mapAttrsToList (name: value: value // { inherit name; }) list
-    ))
-    flatten
-    (filter (config: config.type != "nixos" && config.type != "home"))
-    (groupBy (config: config.system))
-    (mapAttrs (system: defs:
-      listToAttrs (map (def: {
-        name = def.name;
-        value = if def.type == "home" then
-          inputs.self."${def.type}Configurations"."${def.name}".activationPackage
-        else
-          inputs.self."${def.type}Configurations"."${def.name}".config.system.build.toplevel;
-      }) defs)
-    ))
-  ];
+  makeChecks = defs: defs
+    |> mapAttrsToList (_: attrValues)
+    |> flatten
+    |> filter (def: def.type != "nixos")
+    |> groupBy (def: def.system)
+    |> mapAttrs (_: defs: defs
+      |> map (def:
+        let
+          inherit (def) type hostName;
+          activation =
+            if type == "darwin" then self.darwinConfigurations."${hostName}".system
+            else if type == "home" then self.homeConfigurations."${hostName}".activationPackage
+            else assertMsg false "Unknown system";
+        in
+          {
+            name = hostName;
+            value = activation;
+          })
+      |> listToAttrs);
 
-in {
-  makeOutputs = defs: let
-    systems = makeSystems defs;
-    checks = makeChecks defs;
-  in systems // { inherit checks; };
-}
+
+in
+  defs:
+    let
+      applied = applySystemAttrs defs;
+    in
+      (makeSystems applied)
+      // { checks = makeChecks applied; }
