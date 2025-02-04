@@ -1,0 +1,19 @@
+name: Nix
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  check-flake:
+    name: Check flake
+    runs-on: native
+    steps:
+      - name: Check out source
+        uses: actions/checkout@v4
+      - name: Run checks
+        run: nix flake check --extra-experimental-features pipe-operators --all-systems --show-trace
