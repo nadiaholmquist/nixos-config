@@ -28,5 +28,6 @@
     ./vscode.nix
     ./development.nix
     ./darwin-apps.nix
+    ./television.nix
   ];
 }

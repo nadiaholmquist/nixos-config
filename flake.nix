@@ -42,6 +42,11 @@
       url = "github:viperML/nh";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    nix-search-tv = {
+      url = "github:3timeslazy/nix-search-tv";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs = inputs: import ./lib/hosts.nix inputs {
