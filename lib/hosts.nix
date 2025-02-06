@@ -36,13 +36,14 @@ let
   homePkgs.x86_64-linux = import nixpkgs { system = "x86_64-linux"; };
 
   systemFuncs = {
-    nixos = { hostName, system, role, ... }: nixpkgs-nixos.lib.nixosSystem {
+    nixos = { hostName, system, role, ... }: nixpkgs-nixos.lib.nixosSystem rec {
       inherit system;
       specialArgs = { inputs = inputsNixOS; };
       modules = [
         disko.nixosModules.disko
         home-manager.nixosModules.home-manager
         (commonModuleFor system hostName)
+        { home-manager.extraSpecialArgs = specialArgs; }
         (overlaysModuleFor ["nixos" system hostName])
         ../hosts/${hostName}
       ]
@@ -50,13 +51,14 @@ let
       ++ roleModules."${role}";
     };
 
-    darwin = { hostName, system, ... }: darwin.lib.darwinSystem {
+    darwin = { hostName, system, ... }: darwin.lib.darwinSystem rec {
       inherit system;
       specialArgs = { inherit inputs; };
       modules = [
         ../darwin
         ../hosts/${hostName}
         home-manager.darwinModules.home-manager
+        { home-manager.extraSpecialArgs = specialArgs; }
         (commonModuleFor system hostName)
         (overlaysModuleFor ["darwin" system hostName])
       ];
