@@ -17,6 +17,8 @@
     merkuro = true;
   };
 
+  programs.kdeconnect.enable = true;
+
   # Add flatpak support
   services.flatpak.enable = true;
   xdg.portal.enable = true;
