@@ -38,9 +38,6 @@ in {
     ]
 
     (optionals enableLargeApps [
-      vesktop # Discord client
-      cinny-desktop # Matrix
-
       # Dev programs
       jetbrains.clion
       jetbrains.idea-ultimate
@@ -48,6 +45,7 @@ in {
     ])
 
     (optionals (isLinux && enableLargeApps) [
+      discord
       element-desktop
     ])
 
