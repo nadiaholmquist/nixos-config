@@ -139,21 +139,13 @@ let
   );
   formatter = eachSystem (system: treefmtEval.${system}.config.build.wrapper);
 
-  systemChecks =
-    let
-      darwin = mapAttrs (_: config: config.system) self.darwinConfigurations;
-      home = mapAttrs (_: config: config.activationPackage) self.homeConfigurations;
-    in
-    darwin // home;
-
   makeOutputs =
     defs:
     let
       applied = applySystemAttrs defs;
       checks = eachSystem (
         system:
-        systemChecks
-        // {
+        {
           formatting = treefmtEval.${system}.config.build.check self;
         }
       );
