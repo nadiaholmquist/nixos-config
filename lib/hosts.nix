@@ -143,12 +143,9 @@ let
     defs:
     let
       applied = applySystemAttrs defs;
-      checks = eachSystem (
-        system:
-        {
-          formatting = treefmtEval.${system}.config.build.check self;
-        }
-      );
+      checks = eachSystem (system: {
+        formatting = treefmtEval.${system}.config.build.check self;
+      });
     in
     (makeSystems applied)
     // {
