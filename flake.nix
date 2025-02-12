@@ -66,4 +66,8 @@
       deck = {};
     };
   };
+
+  nixConfig = {
+    extra-experimental-features = "pipe-operators";
+  };
 }
