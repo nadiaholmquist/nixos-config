@@ -19,7 +19,10 @@ jobs:
       uses: cachix/install-nix-action@v30
       with:
         github_access_token: ${{ secrets.GITHUB_TOKEN }}
-    - name: Run checks
+    - name: Run flake checks
       run: |
         nix flake check \
           --option allow-import-from-derivation false
+    - name: Check Darwin and Home Manager systems
+      run: |
+        nix eval --raw -f .github/check-hosts.nix

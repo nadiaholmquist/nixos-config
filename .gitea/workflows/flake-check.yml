@@ -15,7 +15,11 @@ jobs:
     steps:
       - name: Check out source
         uses: actions/checkout@v4
-      - name: Run checks
+      - name: Run flake checks
         run: |
           nix flake check \
             --option allow-import-from-derivation false
+                - name: Check Darwin and Home Manager systems
+      - name: Check Darwin and Home Manager systems
+        run: |
+          nix eval --raw -f .github/check-hosts.nix
