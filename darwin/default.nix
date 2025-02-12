@@ -1,7 +1,6 @@
 { pkgs, ... }:
 
 {
-  services.nix-daemon.enable = true;
   nix.gc.automatic = true;
   # NOT safe on macOS.
   nix.settings.auto-optimise-store = false;
