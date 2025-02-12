@@ -20,10 +20,12 @@
   };
 
   home.activation = {
-    cloneNeovimConfig = lib.hm.dag.entryAfter ["writeBoundary"] /*sh*/ ''
-      if [[ ! -d $HOME/.config/nvim ]]; then
-        run ${lib.getExe pkgs.git} clone https://github.com/nadiaholmquist/neovim-config.git $HOME/.config/nvim
-      fi
-    '';
+    cloneNeovimConfig =
+      lib.hm.dag.entryAfter [ "writeBoundary" ] # sh
+        ''
+          if [[ ! -d $HOME/.config/nvim ]]; then
+            run ${lib.getExe pkgs.git} clone https://github.com/nadiaholmquist/neovim-config.git $HOME/.config/nvim
+          fi
+        '';
   };
 }

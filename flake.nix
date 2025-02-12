@@ -5,6 +5,8 @@
     nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
     nixpkgs-nixos.url = "github:NixOS/nixpkgs/nixos-unstable";
 
+    treefmt-nix.url = "github:numtide/treefmt-nix";
+
     # Darwin
     darwin = {
       url = "github:LnL7/nix-darwin";
@@ -49,23 +51,29 @@
     };
   };
 
-  outputs = inputs: import ./lib/hosts.nix inputs {
-    nixos = {
-      narshe = {};
-      # NixOS aarch64 VM on Mac
-      nixarm = { system = "aarch64-linux"; };
-      wsl = { role = "wsl"; };
-    };
+  outputs =
+    inputs:
+    import ./lib/hosts.nix inputs {
+      nixos = {
+        narshe = { };
+        # NixOS aarch64 VM on Mac
+        nixarm = {
+          system = "aarch64-linux";
+        };
+        wsl = {
+          role = "wsl";
+        };
+      };
 
-    darwin = {
-      studio = {};
-      nadiabook = {};
-    };
+      darwin = {
+        studio = { };
+        nadiabook = { };
+      };
 
-    home = {
-      deck = {};
+      home = {
+        deck = { };
+      };
     };
-  };
 
   nixConfig = {
     extra-experimental-features = "pipe-operators";

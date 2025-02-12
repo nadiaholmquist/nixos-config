@@ -1,8 +1,9 @@
 { lib, config, ... }:
 
-let 
- inherit (lib) mkOption mkIf types;
-in {
+let
+  inherit (lib) mkOption mkIf types;
+in
+{
   options = {
     dotfiles.autoLogin = mkOption {
       type = types.bool;

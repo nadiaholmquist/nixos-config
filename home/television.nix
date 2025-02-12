@@ -1,9 +1,15 @@
-{ pkgs, lib, inputs, ... }:
+{
+  pkgs,
+  lib,
+  inputs,
+  ...
+}:
 
 let
   nix-search-tv = inputs.nix-search-tv.packages."${pkgs.system}".default;
   exe = lib.getExe nix-search-tv;
-in {
+in
+{
   home.packages = [
     pkgs.television
     nix-search-tv

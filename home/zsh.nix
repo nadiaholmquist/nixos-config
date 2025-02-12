@@ -1,14 +1,22 @@
-{ config, pkgs, lib, ... }:
+{
+  config,
+  pkgs,
+  lib,
+  ...
+}:
 
 let
   inherit (lib) optional;
   isDarwin = pkgs.hostPlatform.isDarwin;
-in {
-  options.dotfiles.zshPromptColor = with lib; mkOption {
-    type = types.str;
-    default = "green";
-    description = "The shell prompt color.";
-  };
+in
+{
+  options.dotfiles.zshPromptColor =
+    with lib;
+    mkOption {
+      type = types.str;
+      default = "green";
+      description = "The shell prompt color.";
+    };
 
   config = {
     programs.zsh = {
@@ -52,12 +60,14 @@ in {
       '';
     };
 
-    home.packages = with pkgs; [
-      zsh-completions
-      nix-zsh-completions
-    ]
-    # 'g'-prefixed GNU coreutils
-    ++ optional isDarwin coreutils-prefixed;
+    home.packages =
+      with pkgs;
+      [
+        zsh-completions
+        nix-zsh-completions
+      ]
+      # 'g'-prefixed GNU coreutils
+      ++ optional isDarwin coreutils-prefixed;
 
     programs.dircolors.enable = true;
   };

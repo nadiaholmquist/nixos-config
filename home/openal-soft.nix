@@ -1,7 +1,7 @@
 { config, lib, ... }:
 
 {
-  xdg.configFile."alsoft.conf".text = lib.generators.toINI {} {
+  xdg.configFile."alsoft.conf".text = lib.generators.toINI { } {
     General = {
       default-hrtf = "IRC_1058_48000";
       frequency = 48000;

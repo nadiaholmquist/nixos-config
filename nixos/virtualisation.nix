@@ -1,8 +1,14 @@
-{ lib, pkgs, config, ... }:
+{
+  lib,
+  pkgs,
+  config,
+  ...
+}:
 
 let
   inherit (lib) mkMerge mkIf mkEnableOption;
-in {
+in
+{
   options = {
     dotfiles.enableVirtualisation = mkEnableOption "Enable virtualisation support.";
     dotfiles.enableVMWare = mkEnableOption "Enable VMWare Workstation and required specialisation.";
@@ -34,13 +40,15 @@ in {
 
     (mkIf config.dotfiles.enableVMWare {
       specialisation.vmware = mkIf (pkgs.system == "x86_64-linux") {
-        configuration = { pkgs, ... }: {
-          boot.kernelPackages = lib.mkForce pkgs.linuxPackages;
-          virtualisation.vmware.host.enable = true;
-          virtualisation.vmware.host.package = pkgs.vmware-workstation.override {
-            enableMacOSGuests = true;
+        configuration =
+          { pkgs, ... }:
+          {
+            boot.kernelPackages = lib.mkForce pkgs.linuxPackages;
+            virtualisation.vmware.host.enable = true;
+            virtualisation.vmware.host.package = pkgs.vmware-workstation.override {
+              enableMacOSGuests = true;
+            };
           };
-        };
       };
     })
   ];

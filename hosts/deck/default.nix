@@ -2,7 +2,8 @@
 
 let
   nixGLPkgs = inputs.nixGL.packages.x86_64-linux;
-in {
+in
+{
   home.stateVersion = "24.05";
   nixpkgs.config.allowUnfree = true;
   dotfiles.enableGaming = true;

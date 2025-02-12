@@ -1,21 +1,36 @@
 { lib, config, ... }:
 
 let
-  inherit (lib) mkEnableOption mkOption types mkIf mkMerge mkDefault;
+  inherit (lib)
+    mkEnableOption
+    mkOption
+    types
+    mkIf
+    mkMerge
+    mkDefault
+    ;
   cfg = config.dotfiles.builders;
 
   builderVM = hostName: publicHostKey: {
     inherit hostName publicHostKey;
 
-    systems = [ "x86_64-linux" "i686-linux" ];
-    supportedFeatures = ["kvm" "big-parallel" "nixos-test" "benchmark"];
+    systems = [
+      "x86_64-linux"
+      "i686-linux"
+    ];
+    supportedFeatures = [
+      "kvm"
+      "big-parallel"
+      "nixos-test"
+      "benchmark"
+    ];
     sshUser = "ops";
     protocol = "ssh-ng";
     maxJobs = 12;
   };
 
-
-in {
+in
+{
   options.dotfiles.builders = {
     enable = mkEnableOption "Enable distributed builders";
     useBuilderVMs = mkOption {
@@ -46,7 +61,12 @@ in {
       nix.buildMachines = [
         {
           hostName = "narshe";
-          supportedFeatures = ["kvm" "big-parallel" "nixos-test" "benchmark"];
+          supportedFeatures = [
+            "kvm"
+            "big-parallel"
+            "nixos-test"
+            "benchmark"
+          ];
           sshUser = "nhp";
           publicHostKey = "c3NoLWVkMjU1MTkgQUFBQUMzTnphQzFsWkRJMU5URTVBQUFBSUY0bmdmM0NFR05HdnlDUGl2OVB1OWFSSUFwa0t4TXY0K3BaL2lMN1lHa1cgcm9vdEBuYXJzaGUK";
           protocol = "ssh-ng";
@@ -60,7 +80,12 @@ in {
         {
           hostName = "studio.local";
           systems = [ "aarch64-darwin" ];
-          supportedFeatures = ["apple-virt" "benchmark" "big-parallel" "nixos-test"];
+          supportedFeatures = [
+            "apple-virt"
+            "benchmark"
+            "big-parallel"
+            "nixos-test"
+          ];
           sshUser = "nhp";
           publicHostKey = "c3NoLWVkMjU1MTkgQUFBQUMzTnphQzFsWkRJMU5URTVBQUFBSUJOYXVmdDNycHJvd2tpeE9YSFdvZnFaenAzVzNHcndoTXRseGw0WTM5RUggCg==";
           protocol = "ssh-ng";

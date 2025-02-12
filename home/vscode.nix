@@ -1,4 +1,9 @@
-{ pkgs, lib, config, ... }:
+{
+  pkgs,
+  lib,
+  config,
+  ...
+}:
 
 lib.mkIf config.dotfiles.enableHomeGuiApps {
   programs.vscode.enable = true;

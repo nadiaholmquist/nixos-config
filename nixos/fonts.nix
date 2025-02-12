@@ -1,38 +1,46 @@
-{ pkgs, lib, inputs, ...}:
+{
+  pkgs,
+  lib,
+  inputs,
+  ...
+}:
 
 {
-  fonts.packages = with pkgs; let
-    apple = inputs.apple-fonts.packages.${pkgs.system};
-  in [
-    dejavu_fonts
-    noto-fonts
-    noto-fonts-color-emoji
-    noto-fonts-cjk-sans
-    noto-fonts-cjk-serif
-    corefonts
-    vistafonts
-    inter
+  fonts.packages =
+    with pkgs;
+    let
+      apple = inputs.apple-fonts.packages.${pkgs.system};
+    in
+    [
+      dejavu_fonts
+      noto-fonts
+      noto-fonts-color-emoji
+      noto-fonts-cjk-sans
+      noto-fonts-cjk-serif
+      corefonts
+      vistafonts
+      inter
 
-    fira
-    # Some editors do not like variable TTF fonts, so use the regular one
-    (fira-code.override { useVariableFont = false; })
-    nerd-fonts.fira-code
-    jetbrains-mono
-    nerd-fonts.jetbrains-mono
-    cascadia-code
+      fira
+      # Some editors do not like variable TTF fonts, so use the regular one
+      (fira-code.override { useVariableFont = false; })
+      nerd-fonts.fira-code
+      jetbrains-mono
+      nerd-fonts.jetbrains-mono
+      cascadia-code
 
-    apple.sf-pro
-    apple.sf-compact
-    apple.ny
-  ];
+      apple.sf-pro
+      apple.sf-compact
+      apple.ny
+    ];
 
   fonts.fontconfig = {
     subpixel.rgba = lib.mkDefault "rgb";
-    defaultFonts.monospace = ["Fira Mono"];
+    defaultFonts.monospace = [ "Fira Mono" ];
     # Need to figure out how to make this use SF Pro Display at and above 20pt. Use default for now.
     #defaultFonts.sansSerif = ["SF Pro Text"];
-    defaultFonts.sansSerif = ["Inter"];
-    defaultFonts.serif = ["Times New Roman"];
+    defaultFonts.sansSerif = [ "Inter" ];
+    defaultFonts.serif = [ "Times New Roman" ];
   };
 
   environment.sessionVariables = {

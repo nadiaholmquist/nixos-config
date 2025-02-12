@@ -1,8 +1,19 @@
-{ pkgs, lib, config, ... }:
+{
+  pkgs,
+  lib,
+  config,
+  ...
+}:
 
 let
-  inherit (lib) mkOption mkIf mkMerge types;
-in {
+  inherit (lib)
+    mkOption
+    mkIf
+    mkMerge
+    types
+    ;
+in
+{
   options = {
     dotfiles.enableFanControl = mkOption {
       type = types.bool;
@@ -11,7 +22,7 @@ in {
     };
     dotfiles.gpuSupport = mkOption {
       description = "Add extra packages for supporting a GPU.";
-      type = with types; nullOr (enum ["amd"]);
+      type = with types; nullOr (enum [ "amd" ]);
       default = null;
     };
     dotfiles.enableROCm = mkOption {
@@ -80,18 +91,20 @@ in {
       hardware.amdgpu.opencl.enable = true;
 
       # ROCm workaround from the wiki
-      systemd.tmpfiles.rules = let
-        rocmEnv = pkgs.symlinkJoin {
-          name = "rocm-combined";
-          paths = with pkgs.rocmPackages; [
-            rocblas
-            hipblas
-            clr
-          ];
-      };
-      in [
-        "L+    /opt/rocm   -    -    -     -    ${rocmEnv}"
-      ];
+      systemd.tmpfiles.rules =
+        let
+          rocmEnv = pkgs.symlinkJoin {
+            name = "rocm-combined";
+            paths = with pkgs.rocmPackages; [
+              rocblas
+              hipblas
+              clr
+            ];
+          };
+        in
+        [
+          "L+    /opt/rocm   -    -    -     -    ${rocmEnv}"
+        ];
     })
 
     # Userspace fan control

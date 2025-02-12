@@ -1,22 +1,27 @@
 { lib, pkgs, ... }:
 
 {
-  environment.systemPackages = (with pkgs; [
-    git
-    file
-    wget
-    python3
-    dig
-    killall
-    rsync
+  environment.systemPackages =
+    (with pkgs; [
+      git
+      file
+      wget
+      python3
+      dig
+      killall
+      rsync
 
-    alsa-utils
+      alsa-utils
 
-    stress-ng
-  ]) ++ lib.optionals pkgs.hostPlatform.isx86_64 (with pkgs; [
-    wineWow64Packages.unstableFull
-    cpu-x
-  ]);
+      stress-ng
+    ])
+    ++ lib.optionals pkgs.hostPlatform.isx86_64 (
+      with pkgs;
+      [
+        wineWow64Packages.unstableFull
+        cpu-x
+      ]
+    );
 
   # Shell
   programs.zsh.enable = true;

@@ -1,4 +1,9 @@
-{ pkgs, lib, config, ... }:
+{
+  pkgs,
+  lib,
+  config,
+  ...
+}:
 
 lib.mkIf (config.dotfiles.enableHomeGuiApps && !pkgs.stdenv.isDarwin) {
   # For some reason, setting this through Home Manager fixes the cursor theme being inconsistent in some apps (notablly, JetBrains IDEs and Steam).
@@ -16,8 +21,8 @@ lib.mkIf (config.dotfiles.enableHomeGuiApps && !pkgs.stdenv.isDarwin) {
 
   home.packages = [
     (pkgs.catppuccin-kde.override {
-      flavour = ["mocha"];
-      accents = ["red"];
+      flavour = [ "mocha" ];
+      accents = [ "red" ];
     })
   ];
 

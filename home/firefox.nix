@@ -1,14 +1,24 @@
-{ pkgs, lib, config, ... }:
+{
+  pkgs,
+  lib,
+  config,
+  ...
+}:
 
 let
   inherit (lib.attrsets) mapAttrs' nameValuePair;
 
-  mkExtensions = exts: mapAttrs' (name: id:
-    nameValuePair id {
-      install_url = "https://addons.mozilla.org/firefox/downloads/latest/${name}/latest.xpi";
-      installation_mode = "force_installed";
-    }) exts;
-in lib.mkIf (config.dotfiles.enableHomeGuiApps && !pkgs.stdenv.isDarwin) {
+  mkExtensions =
+    exts:
+    mapAttrs' (
+      name: id:
+      nameValuePair id {
+        install_url = "https://addons.mozilla.org/firefox/downloads/latest/${name}/latest.xpi";
+        installation_mode = "force_installed";
+      }
+    ) exts;
+in
+lib.mkIf (config.dotfiles.enableHomeGuiApps && !pkgs.stdenv.isDarwin) {
   programs.firefox = {
     enable = true;
     nativeMessagingHosts = with pkgs; [ kdePackages.plasma-browser-integration ];
