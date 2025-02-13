@@ -1,9 +1,4 @@
-{
-  lib,
-  pkgs,
-  config,
-  ...
-}:
+{ pkgs, config, ... }:
 
 {
   # TODO find out if there's a better way to "inherit" an option
@@ -36,5 +31,6 @@
     ./development.nix
     ./darwin-apps.nix
     ./television.nix
+    ./bat.nix
   ];
 }
