@@ -100,7 +100,6 @@ in
         duckstation
         ares
         mgba
-        lime3ds
         (retroarch.withCores (
           l: with l; [
             mesen
