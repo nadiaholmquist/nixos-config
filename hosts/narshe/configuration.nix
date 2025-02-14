@@ -26,4 +26,11 @@
     "aarch64-linux"
     "x86_64-windows"
   ];
+
+  dotfiles.builders = {
+    enable = true;
+    useMacStudio = true;
+  };
+
+  nix.distributedBuilds = false;
 }
