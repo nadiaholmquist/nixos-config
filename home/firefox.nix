@@ -21,6 +21,7 @@ in
 lib.mkIf (config.dotfiles.enableHomeGuiApps && !pkgs.stdenv.isDarwin) {
   programs.firefox = {
     enable = true;
+    languagePacks = [ "da" ];
     nativeMessagingHosts = with pkgs; [ kdePackages.plasma-browser-integration ];
     policies = {
       DisableTelemetry = true;
