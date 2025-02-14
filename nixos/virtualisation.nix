@@ -26,13 +26,7 @@ in
       # libvirt
       virtualisation.libvirtd.enable = lib.mkDefault true;
       virtualisation.libvirtd.qemu.swtpm.enable = lib.mkDefault true;
-      virtualisation.libvirtd.qemu.ovmf.packages = with pkgs; [
-        (OVMF.override {
-          secureBoot = true;
-          msVarsTemplate = true;
-          tpmSupport = true;
-        }).fd
-      ];
+      virtualisation.libvirtd.qemu.ovmf.packages = [ pkgs.OVMFFull.fd ];
       environment.systemPackages = [ pkgs.virtiofsd ];
 
       programs.virt-manager.enable = lib.mkDefault true;
