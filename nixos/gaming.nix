@@ -6,48 +6,30 @@
 }:
 
 let
-  haveSteam = config.dotfiles.enableGaming && pkgs.hostPlatform.isx86_64;
+  inherit (lib) mkIf mkEnableOption;
+  enableGaming = config.dotfiles.enableGaming;
+  haveSteam = lib.meta.availableOn pkgs.hostPlatform pkgs.steam;
 in
 {
   options = {
-    dotfiles.enableGaming = lib.mkEnableOption "Enable packages for gaming support.";
+    dotfiles.enableGaming = mkEnableOption "Enable packages for gaming support.";
   };
 
-  config = lib.mkIf haveSteam {
+  config = mkIf enableGaming {
+    programs.gamemode.enable = true;
+
+    programs.gamescope.enable = true;
+
     environment.systemPackages = [
       (pkgs.callPackage ../pkgs/vk-hdr-layer.nix { })
     ];
 
-    programs.steam = {
-      enable = true;
-      package = pkgs.steam.override {
-        extraPkgs =
-          pkgs: with pkgs; [
-            xorg.libXcursor
-            xorg.libXi
-            xorg.libXinerama
-            xorg.libXScrnSaver
-            libpng
-            libpulseaudio
-            libvorbis
-            stdenv.cc.cc.lib
-            libkrb5
-            keyutils
-          ];
-      };
-      extest.enable = true; # Steam Input on Wayland
-      gamescopeSession.enable = true;
-      extraCompatPackages = [
-        pkgs.proton-ge-bin
-      ];
-      extraPackages = with pkgs; [
-        gamescope
-      ];
-    };
-
-    programs.gamescope.enable = true;
-
     # udev rules for Steam Input
     hardware.steam-hardware.enable = true;
+
+    programs.steam = mkIf haveSteam {
+      enable = true;
+      extest.enable = true; # Steam Input on Wayland
+    };
   };
 }
