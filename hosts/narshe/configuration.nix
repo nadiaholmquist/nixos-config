@@ -3,8 +3,6 @@
 {
   system.stateVersion = "24.05";
 
-  nix.settings.auto-optimise-store = true;
-
   dotfiles.enableFanControl = true;
   dotfiles.gpuSupport = "amd";
   dotfiles.enableROCm = false;
