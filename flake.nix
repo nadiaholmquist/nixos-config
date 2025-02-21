@@ -60,6 +60,9 @@
         nixarm = {
           system = "aarch64-linux";
         };
+        pbp = {
+          system = "aarch64-linux";
+        };
         wsl = {
           role = "wsl";
         };
