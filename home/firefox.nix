@@ -36,6 +36,7 @@ lib.mkIf (config.dotfiles.enableHomeGuiApps && !pkgs.stdenv.isDarwin) {
         youtube-auto-hd-fps = "avi6106@gmail.com";
         plasma-integration = "plasma-browser-integration@kde.org";
         sponsorblock = "sponsorBlocker@ajay.app";
+        darkreader = "addon@darkreader.org";
       };
 
       Preferences = {
