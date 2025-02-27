@@ -9,7 +9,6 @@
   writeText,
   vulkan-headers,
   vulkan-utility-libraries,
-  jq,
   libX11,
   libXrandr,
   libxcb,
@@ -17,16 +16,16 @@
   wayland-scanner,
 }:
 
-stdenv.mkDerivation rec {
+stdenv.mkDerivation {
   pname = "vulkan-hdr-layer";
-  version = "63d2eec";
+  version = "0-unstable-2025-02-13";
 
   src = fetchFromGitHub {
     owner = "Zamundaaa";
     repo = "VK_hdr_layer";
-    rev = "1534ef826bfecf525a6c3154f2e3b52d640a79cf";
+    rev = "1f13469feb0704bcf56b64fd6ec3793e5087d895";
     fetchSubmodules = true;
-    hash = "sha256-LaI7axY+O6MQ/7xdGlTO3ljydFAvqqdZpUI7A+B2Ilo=";
+    hash = "sha256-5WfkIATcwecr+ioI4GfQQ34G0jWLctZ4oBlSFqw6UE8=";
   };
 
   nativeBuildInputs = [
