@@ -1,18 +1,16 @@
 {
   pkgs,
   lib,
-  inputs,
   ...
 }:
 
 let
-  nix-search-tv = inputs.nix-search-tv.packages."${pkgs.system}".default;
-  exe = lib.getExe nix-search-tv;
+  exe = lib.getExe pkgs.nix-search-tv;
 in
 {
   home.packages = [
     pkgs.television
-    nix-search-tv
+    pkgs.nix-search-tv
   ];
 
   xdg.configFile."television/nix_channels.toml".text = ''
