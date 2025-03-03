@@ -61,6 +61,9 @@
         wsl = {
           role = "wsl";
         };
+        rock5 = {
+          system = "aarch64-linux";
+        };
       };
 
       darwin = {
