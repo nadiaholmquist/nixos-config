@@ -21,7 +21,7 @@ in
     programs.gamescope.enable = true;
 
     environment.systemPackages = [
-      (pkgs.callPackage ../pkgs/vk-hdr-layer.nix { })
+      pkgs.vulkan-hdr-layer-kwin6
     ];
 
     # udev rules for Steam Input
