@@ -12,6 +12,7 @@
 
 let
   inherit (lib)
+    optional
     optionals
     mkIf
     concatLists
@@ -19,7 +20,14 @@ let
     types
     ;
   inherit (pkgs.hostPlatform) isx86_64 isLinux isDarwin;
-  inherit (config.dotfiles) enableHomeGuiApps enableGaming enableLargeApps;
+  inherit (config.dotfiles)
+    enableGaming
+    enableHomeGuiApps
+    enableLargeApps
+    enableJetBrains
+    ;
+
+  isx86_64Linux = isLinux && isx86_64;
 
 in
 {
@@ -39,6 +47,11 @@ in
       description = "Enable large apps like the JetBrains tools or Electron";
       default = true;
     };
+    enableJetBrains = mkOption {
+      type = types.bool;
+      description = "Enable JetBrains IDEs (uses a lot of disk space)";
+      default = config.dotfiles.enableLargeApps;
+    };
   };
 
   config.home.packages =
@@ -50,18 +63,6 @@ in
         neovide
       ]
 
-      (optionals enableLargeApps [
-        # Dev programs
-        jetbrains.clion
-        jetbrains.idea-ultimate
-        jetbrains.rust-rover
-      ])
-
-      (optionals (isLinux && enableLargeApps) [
-        discord
-        element-desktop
-      ])
-
       (optionals isLinux [
         vlc
         mpv
@@ -70,9 +71,7 @@ in
       ])
 
       (optionals (isLinux && isx86_64) [
-        bitwarden-desktop
         cider # Apple Music
-        jetbrains-toolbox
         zenmonitor
         via
       ])
@@ -83,22 +82,37 @@ in
         qemu
       ])
 
+      (optionals enableJetBrains [
+        # Dev programs
+        jetbrains.clion
+        jetbrains.idea-ultimate
+        jetbrains.rust-rover
+      ])
+
+      (optional (isx86_64Linux && enableJetBrains) jetbrains-toolbox)
+
+      (optionals (isLinux && enableLargeApps) [
+        bitwarden-desktop
+        element-desktop
+        # Discord client only supports x86_64 on Linux, openasar can be used as a replacement for it
+        (if isx86_64 then discord else openasar)
+      ])
+
       (optionals enableGaming [
         prismlauncher # Minecraft
+        gzdoom
 
         # Emulators
+        ares
         dolphin-emu-beta
         nanoboyadvance
         melonDS
       ])
 
       (optionals (enableGaming && isLinux) [
-        gzdoom
-
         # Emulators
         cemu
         duckstation
-        ares
         mgba
         (retroarch.withCores (
           l: with l; [
