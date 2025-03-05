@@ -94,8 +94,8 @@ in
       (optionals (isLinux && enableLargeApps) [
         bitwarden-desktop
         element-desktop
-        # Discord client only supports x86_64 on Linux, openasar can be used as a replacement for it
-        (if isx86_64 then discord else openasar)
+        # The official Discord client only supports x86_64 on Linux
+        (if isx86_64 then discord else vesktop)
       ])
 
       (optionals enableGaming [
