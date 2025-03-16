@@ -30,26 +30,27 @@ in
 
       programs.virt-manager.enable = lib.mkDefault true;
 
-      environment.systemPackages = let
-        arch = pkgs.hostPlatform.qemuArch;
-        qemu-efi = pkgs.writeShellApplication {
-          name = "qemu-system-${arch}-efi";
-          runtimeInputs = [ pkgs.qemu_kvm ];
-          text = ''
-            cp ${pkgs.OVMFFull.fd}/FV/OVMF_VARS.fd "$PWD/"
-            chmod 644 "$PWD/OVMF_VARS.fd"
-            exec qemu-system-${arch} \
-              -M q35 \
-              -drive "if=pflash,readonly=on,format=raw,file=${pkgs.OVMFFull.fd}/FV/OVMF_CODE.fd" \
-              -drive "if=pflash,format=raw,file=$PWD/OVMF_VARS.fd" \
-              "$@"
-          '';
-        };
-      in
-      [
-        pkgs.virtiofsd
-        qemu-efi
-      ];
+      environment.systemPackages =
+        let
+          arch = pkgs.hostPlatform.qemuArch;
+          qemu-efi = pkgs.writeShellApplication {
+            name = "qemu-system-${arch}-efi";
+            runtimeInputs = [ pkgs.qemu_kvm ];
+            text = ''
+              cp ${pkgs.OVMFFull.fd}/FV/OVMF_VARS.fd "$PWD/"
+              chmod 644 "$PWD/OVMF_VARS.fd"
+              exec qemu-system-${arch} \
+                -M q35 \
+                -drive "if=pflash,readonly=on,format=raw,file=${pkgs.OVMFFull.fd}/FV/OVMF_CODE.fd" \
+                -drive "if=pflash,format=raw,file=$PWD/OVMF_VARS.fd" \
+                "$@"
+            '';
+          };
+        in
+        [
+          pkgs.virtiofsd
+          qemu-efi
+        ];
     })
 
     (mkIf config.dotfiles.enableVMWare {
