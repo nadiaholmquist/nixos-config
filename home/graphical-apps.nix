@@ -104,7 +104,6 @@ in
 
         # Emulators
         ares
-        dolphin-emu-beta
         nanoboyadvance
         melonDS
       ])
@@ -112,6 +111,7 @@ in
       (optionals (enableGaming && isLinux) [
         # Emulators
         cemu
+        dolphin-emu-beta
         duckstation
         mgba
         (retroarch.withCores (
