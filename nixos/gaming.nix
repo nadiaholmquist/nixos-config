@@ -29,6 +29,11 @@ in
 
     programs.steam = mkIf haveSteam {
       enable = true;
+      extraPackages = [
+        pkgs.vulkan-hdr-layer-kwin6
+        pkgs.mangohud
+        pkgs.gamescope
+      ];
       extest.enable = true; # Steam Input on Wayland
     };
   };
