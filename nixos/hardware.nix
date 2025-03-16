@@ -7,28 +7,25 @@
 
 let
   inherit (lib)
+    mkEnableOption
     mkOption
     mkIf
     mkMerge
     types
     ;
+
+  cfg = config.dotfiles;
 in
 {
-  options = {
-    dotfiles.enableFanControl = mkOption {
-      type = types.bool;
-      description = "Enable userspace fan control.";
-      default = false;
-    };
-    dotfiles.gpuSupport = mkOption {
+  options.dotfiles = {
+    enableFanControl = mkEnableOption "Enable userspace fan control.";
+    enableROCm = mkEnableOption "Enable AMD ROCm";
+    enableGPUOverclocking = mkEnableOption "Enable GPU overclocking.";
+
+    gpuSupport = mkOption {
       description = "Add extra packages for supporting a GPU.";
       type = with types; nullOr (enum [ "amd" ]);
       default = null;
-    };
-    dotfiles.enableROCm = mkOption {
-      type = types.bool;
-      description = "Enable AMD ROCm";
-      default = false;
     };
   };
 
@@ -60,7 +57,7 @@ in
     }
 
     # AMD GPU specific settings
-    (mkIf (config.dotfiles.gpuSupport == "amd") {
+    (mkIf (cfg.gpuSupport == "amd") {
       hardware.amdgpu.initrd.enable = true;
 
       #hardware.amdgpu.amdvlk.enable = true;
@@ -68,7 +65,15 @@ in
       #environment.variables.AMD_VULKAN_ICD = "RADV";
     })
 
-    (mkIf config.dotfiles.enableROCm {
+    (mkIf (cfg.gpuSupport == "amd" && cfg.enableGPUOverclocking == true) {
+      boot.kernelParams = [ "amdgpu.ppfeaturemask=0xffffffff" ];
+
+      environment.systemPackages = [ pkgs.lact ];
+      systemd.packages = [ pkgs.lact ];
+      systemd.services.lactd.wantedBy = [ "multi-user.target" ];
+    })
+
+    (mkIf cfg.enableROCm {
       nixpkgs.config.rocmSupport = true;
 
       hardware.amdgpu.opencl.enable = true;
@@ -91,7 +96,7 @@ in
     })
 
     # Userspace fan control
-    (mkIf config.dotfiles.enableFanControl {
+    (mkIf cfg.enableFanControl {
       programs.coolercontrol.enable = true;
       environment.systemPackages = with pkgs; [
         lm_sensors

@@ -3,13 +3,16 @@
 {
   system.stateVersion = "24.05";
 
-  dotfiles.enableFanControl = true;
-  dotfiles.gpuSupport = "amd";
-  dotfiles.enableROCm = false;
-  dotfiles.enableGaming = true;
-  dotfiles.enableVirtualisation = true;
-  dotfiles.enableVMWare = false;
-  dotfiles.autoLogin = false;
+  dotfiles = {
+    enableFanControl = true;
+    gpuSupport = "amd";
+    enableROCm = false;
+    enableGaming = true;
+    enableGPUOverclocking = true;
+    enableVirtualisation = true;
+    enableVMWare = false;
+    autoLogin = false;
+  };
 
   home-manager.users.nhp = {
     home.stateVersion = "24.05";
