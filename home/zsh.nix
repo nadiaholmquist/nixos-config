@@ -6,7 +6,12 @@
 }:
 
 let
-  inherit (lib) optional;
+  inherit (lib)
+    getExe'
+    mkMerge
+    optional
+    optionalAttrs
+    ;
   isDarwin = pkgs.hostPlatform.isDarwin;
 in
 {
@@ -34,9 +39,14 @@ in
         }
       ];
 
-      shellAliases = {
-        ls = (if isDarwin then "gls" else "ls") + " --color=auto";
-      };
+      shellAliases = mkMerge [
+        {
+          ls = "${getExe' pkgs.coreutils "ls"} --color=auto";
+        }
+        (optionalAttrs isDarwin {
+          unquarantine = "/usr/bin/xattr -r -d com.apple.quarantine";
+        })
+      ];
 
       initExtra = ''
         PROMPT='%F{${config.dotfiles.zshPromptColor}}%n@%m %B%1~%b %f%#%f '
