@@ -1,25 +1,5 @@
 {
   "nodes": {
-    "apple-fonts": {
-      "inputs": {
-        "nixpkgs": [
-          "nixpkgs-nixos"
-        ]
-      },
-      "locked": {
-        "lastModified": 1727579324,
-        "narHash": "sha256-Y3g0cLJuph61GKRn3G2urnHFpg8QjiInQ+ETZwTNDYE=",
-        "owner": "nadiaholmquist",
-        "repo": "apple-fonts.nix",
-        "rev": "d6e0db018432c537941834716b4f48011abaef26",
-        "type": "github"
-      },
-      "original": {
-        "owner": "nadiaholmquist",
-        "repo": "apple-fonts.nix",
-        "type": "github"
-      }
-    },
     "darwin": {
       "inputs": {
         "nixpkgs": [
@@ -238,7 +218,6 @@
     },
     "root": {
       "inputs": {
-        "apple-fonts": "apple-fonts",
         "darwin": "darwin",
         "disko": "disko",
         "home-manager": "home-manager",

@@ -30,11 +30,6 @@
       inputs.nixpkgs.follows = "nixpkgs-nixos";
     };
 
-    apple-fonts = {
-      url = "github:nadiaholmquist/apple-fonts.nix";
-      inputs.nixpkgs.follows = "nixpkgs-nixos";
-    };
-
     nixGL = {
       url = "github:nix-community/nixGL";
       inputs.nixpkgs.follows = "nixpkgs";
