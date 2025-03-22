@@ -1,4 +1,4 @@
-{ lib, ... }:
+{ lib, pkgs, ... }:
 
 let
   vmOptions = {
@@ -8,9 +8,8 @@ let
 
     virtualisation.cores = 8;
     virtualisation.memorySize = 4096;
-    virtualisation.qemu.options = [
+    virtualisation.qemu.options = lib.mkIf (pkgs.stdenv.isx86_64) [
       "-M q35"
-      "-accel kvm"
       "-vga none" # Default VGA conflicts with the virtio-gpu device
       "-device virtio-gpu-gl"
       "-display"

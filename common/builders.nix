@@ -39,7 +39,8 @@ in
       description = "Use builder VMs";
     };
 
-    useDesktop = mkEnableOption "Build on the desktop PC.";
+    useDesktop = mkEnableOption "Build on the desktop PC";
+    useAArch64VM = mkEnableOption "Build on the AArch64 VM";
     useMacStudio = mkEnableOption "Build on the Mac Studio";
   };
 
@@ -71,6 +72,25 @@ in
           publicHostKey = "c3NoLWVkMjU1MTkgQUFBQUMzTnphQzFsWkRJMU5URTVBQUFBSUY0bmdmM0NFR05HdnlDUGl2OVB1OWFSSUFwa0t4TXY0K3BaL2lMN1lHa1cgcm9vdEBuYXJzaGUK";
           protocol = "ssh-ng";
           maxJobs = 16;
+        }
+      ];
+    })
+
+    (mkIf cfg.useAArch64VM {
+      nix.buildMachines = [
+        {
+          hostName = "nixarm.local";
+          system = "aarch64-linux";
+          supportedFeatures = [
+            "kvm"
+            "big-parallel"
+            "nixos-test"
+            "benchmark"
+          ];
+          sshUser = "nhp";
+          publicHostKey = "c3NoLWVkMjU1MTkgQUFBQUMzTnphQzFsWkRJMU5URTVBQUFBSUdweGVjNlBmQVl6bkx2dnhLTzBYeWNyMHRXODhaTmdxQ3VSQ05zclB6eSs=";
+          protocol = "ssh-ng";
+          maxJobs = 8;
         }
       ];
     })

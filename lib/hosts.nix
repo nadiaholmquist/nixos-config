@@ -6,20 +6,14 @@
   darwin,
   disko,
   treefmt-nix,
+  nix-rosetta-builder,
   ...
 }@inputs:
 
 let
-  inherit (builtins)
-    filter
-    groupBy
-    listToAttrs
-    attrValues
-    ;
   inherit (nixpkgs) lib;
-  inherit (lib) assertMsg genAttrs;
-  inherit (lib.lists) flatten;
-  inherit (lib.attrsets) mapAttrs mapAttrs' mapAttrsToList;
+  inherit (lib) genAttrs;
+  inherit (lib.attrsets) mapAttrs mapAttrs';
 
   inherit (import ./overlays.nix { inherit lib; }) overlaysModuleFor;
   roleModules = import ../nixos/role-modules.nix { inputs = inputsNixOS; };
@@ -91,6 +85,7 @@ let
           ../hosts/${hostName}
           home-manager.darwinModules.home-manager
           { home-manager.extraSpecialArgs = specialArgs; }
+          nix-rosetta-builder.darwinModules.default
           (commonModuleFor system hostName)
           (overlaysModuleFor [
             "darwin"

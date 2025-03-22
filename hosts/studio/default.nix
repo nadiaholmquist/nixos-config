@@ -10,4 +10,6 @@
     dotfiles.zshPromptColor = "green";
     dotfiles.enableGaming = true;
   };
+
+  nix-rosetta-builder.enable = true;
 }

@@ -7,6 +7,7 @@
     ./fonts.nix
     ./app-setup.nix
     ./nh.nix
+    ./rosetta-builder.nix
     ../common/builders.nix
   ];
 
