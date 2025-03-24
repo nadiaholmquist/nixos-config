@@ -2,6 +2,7 @@
   nix.gc.automatic = true;
   # NOT safe on macOS.
   nix.settings.auto-optimise-store = false;
+  nix.optimise.automatic = true;
 
   imports = [
     ./fonts.nix
