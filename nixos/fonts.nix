@@ -14,14 +14,17 @@
     corefonts
     vistafonts
     inter
-
     fira
+    atkinson-hyperlegible
+    atkinson-hyperlegible-next
+
     # Some editors do not like variable TTF fonts, so use the regular one
     (fira-code.override { useVariableFont = false; })
     nerd-fonts.fira-code
     jetbrains-mono
     nerd-fonts.jetbrains-mono
     cascadia-code
+    atkinson-hyperlegible-mono
   ];
 
   fonts.fontconfig = {
