@@ -19,8 +19,6 @@
     dotfiles.zshPromptColor = "cyan";
   };
 
-  fonts.fontconfig.hinting.enable = false;
-  fonts.fontconfig.hinting.style = "none";
   fonts.fontconfig.subpixel.rgba = "none";
 
   boot.binfmt.emulatedSystems = [
