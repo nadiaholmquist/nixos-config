@@ -18,6 +18,7 @@ in
         tmux
         calc
         ncdu
+        fd
 
         # Archives
         zip
