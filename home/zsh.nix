@@ -41,7 +41,7 @@ in
 
       shellAliases = mkMerge [
         {
-          ls = "${getExe' pkgs.coreutils "ls"} --color=auto";
+          ls = "eza";
           cat = "bat --plain --no-pager";
         }
         (optionalAttrs isDarwin {

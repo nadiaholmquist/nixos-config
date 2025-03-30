@@ -16,9 +16,20 @@ in
         htop
         btop
         tmux
-        calc
         ncdu
         fd
+        eza
+        fselect
+        dua
+        bandwhich
+        jless
+        miniserve
+        dogdns
+
+        # Calculators
+        calc
+        eva
+        fend
 
         # Archives
         zip
@@ -38,6 +49,7 @@ in
         nix-update
         nix-output-monitor
         nixos-rebuild
+        nixfmt-rfc-style
         comma
         deploy-rs
 
@@ -61,6 +73,7 @@ in
         usbutils
         pciutils
         distrobox
+        pipr
 
         # Development
         stdenv.cc
