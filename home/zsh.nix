@@ -42,6 +42,7 @@ in
       shellAliases = mkMerge [
         {
           ls = "${getExe' pkgs.coreutils "ls"} --color=auto";
+          cat = "bat --plain --no-pager";
         }
         (optionalAttrs isDarwin {
           unquarantine = "/usr/bin/xattr -r -d com.apple.quarantine";
