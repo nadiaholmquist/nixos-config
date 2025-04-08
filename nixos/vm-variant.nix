@@ -11,9 +11,8 @@ let
     virtualisation.qemu.options = lib.mkIf (pkgs.stdenv.isx86_64) [
       "-M q35"
       "-vga none" # Default VGA conflicts with the virtio-gpu device
-      "-device virtio-gpu-gl"
-      "-display"
-      "sdl,gl=on"
+      "-device virtio-vga-gl,blob=on,hostmem=4G,venus=on"
+      "-display sdl,gl=on"
       "-audio driver=pipewire,model=virtio"
     ];
 
