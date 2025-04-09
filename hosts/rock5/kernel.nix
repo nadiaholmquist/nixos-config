@@ -7,7 +7,7 @@
 }:
 
 let
-  modDirVersion = "6.13.0";
+  modDirVersion = "6.14.0";
   linuxPkg =
     { fetchFromGitLab, buildLinux, ... }@args:
     buildLinux (
@@ -20,8 +20,8 @@ let
           domain = "gitlab.collabora.com";
           owner = "hardware-enablement";
           repo = "rockchip-3588/linux";
-          rev = "d45f955d263ed91e45808aa82b9379a4109ad713";
-          hash = "sha256-nenI5pPfRZRpK83QQCJ6U28V+EcQBEouz0Hv4zFLkxk";
+          rev = "ccc5f4690752058e2954e287d7704599f1f8122b";
+          hash = "";
         };
 
         inherit modDirVersion;
