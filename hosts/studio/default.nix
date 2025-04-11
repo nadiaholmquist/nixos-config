@@ -11,5 +11,5 @@
     dotfiles.enableGaming = true;
   };
 
-  nix-rosetta-builder.enable = true;
+  nix-rosetta-builder.enable = false;
 }
