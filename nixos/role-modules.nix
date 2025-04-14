@@ -18,6 +18,7 @@
     ./fonts.nix
     ./gaming.nix
     ./hardware.nix
+    ./networking.nix
     ./services.nix
     ./virtualisation.nix
   ];
