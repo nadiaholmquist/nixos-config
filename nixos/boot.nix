@@ -6,33 +6,51 @@
 }:
 
 {
-  boot = {
-    kernelPackages = lib.mkDefault pkgs.linuxPackages_latest;
+  options = {
+    dotfiles.bootloader = lib.mkOption {
+      type = lib.types.enum [
+        "systemd-boot"
+        "grub"
+      ];
+      default = "systemd-boot";
+      description = "Which bootloader to use";
+    };
+  };
 
-    loader = {
-      timeout = 15;
-      efi.canTouchEfiVariables = false;
+  config = {
+    boot = {
+      kernelPackages = lib.mkDefault pkgs.linuxPackages_latest;
 
-      grub = {
-        enable = true;
-        device = "nodev";
-        efiSupport = true;
-        # Do not depend on entry in NVRAM to boot
-        efiInstallAsRemovable = true;
-        useOSProber = true;
-        default = "saved";
+      loader = {
+        timeout = 15;
+        efi.canTouchEfiVariables = false;
 
-        splashImage = null;
-        backgroundColor = "#121212";
-        theme = pkgs.sleek-grub-theme.override {
-          withBanner = config.networking.hostName;
-          withStyle = "dark";
+        systemd-boot = lib.mkIf (config.dotfiles.bootloader == "systemd-boot") {
+          enable = true;
+          graceful = true;
+        };
+
+        grub = lib.mkIf (config.dotfiles.bootloader == "grub") {
+          enable = true;
+          device = "nodev";
+          efiSupport = true;
+          # Do not depend on entry in NVRAM to boot
+          efiInstallAsRemovable = true;
+          useOSProber = true;
+          default = "saved";
+
+          splashImage = null;
+          backgroundColor = "#121212";
+          theme = pkgs.sleek-grub-theme.override {
+            withBanner = config.networking.hostName;
+            withStyle = "dark";
+          };
         };
       };
+
+      initrd.systemd.enable = true;
+
+      plymouth.enable = true;
     };
-
-    initrd.systemd.enable = true;
-
-    plymouth.enable = true;
   };
 }

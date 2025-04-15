@@ -27,7 +27,7 @@
     device = "/dev/disk/by-label/nixos-rock5";
     fsType = "ext4";
   };
-  
+
   boot.kernelPackages = pkgs.linuxPackages_testing;
 
   boot.initrd.availableKernelModules = [

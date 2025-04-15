@@ -4,6 +4,7 @@
   system.stateVersion = "24.05";
 
   dotfiles = {
+    bootloader = "grub";
     enableFanControl = true;
     gpuSupport = "amd";
     enableROCm = false;
