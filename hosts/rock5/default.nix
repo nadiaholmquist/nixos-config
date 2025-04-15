@@ -23,26 +23,27 @@
     };
   };
 
+  fileSystems."/efi" = {
+    device = "/dev/disk/by-uuid/0729-785F";
+    fsType = "vfat";
+  };
+
   fileSystems."/" = {
     device = "/dev/disk/by-label/nixos-rock5";
     fsType = "ext4";
   };
-
-  boot = {
-    loader.grub.enable = lib.mkForce false;
-    loader.generic-extlinux-compatible.enable = true;
-
-    kernelPackages = lib.mkForce (
-      pkgs.callPackage ./kernel.nix {
-        inherit (config.boot) kernelPatches;
-      }
-    );
-  };
+  
+  boot.kernelPackages = pkgs.linuxPackages_testing;
 
   hardware = {
     firmware = [ pkgs.linux-firmware ];
     deviceTree.enable = true;
     deviceTree.name = "rockchip/rk3588s-rock-5a.dtb";
+  };
+
+  environment.sessionVariables = {
+    PAN_MESA_DEBUG = "gl3";
+    KWIN_COMPOSE = "O2ES";
   };
 
   # It definitely does not need all those but I don't want to mess with it
@@ -75,4 +76,11 @@
     "hid_microsoft"
     "hid_cherry"
   ];
+
+  # The system does not seem to respond to keyboard/mouse input to wake
+  # and I can't reach the power button when it's in a case
+  systemd.sleep.extraConfig = ''
+    AllowSuspend=no
+    AllowHibernation=no
+  '';
 }
