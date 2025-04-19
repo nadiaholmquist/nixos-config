@@ -31,8 +31,13 @@
   boot.kernelPackages = pkgs.linuxPackages_testing;
 
   boot.initrd.availableKernelModules = [
+    # From all-hardware.nix, should make graphics available early
+    "dw-hdmi"
+    "dw-mipi-dsi"
     "rockchipdrm"
-    "panthor"
+    "rockchip-rga"
+    "phy-rockchip-pcie"
+    "pcie-rockchip-host"
   ];
 
   hardware = {
