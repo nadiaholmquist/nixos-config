@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, lib, config, ... }:
 
 {
   # Don't feel like dealing with it lol
@@ -20,24 +20,28 @@
   services.resolved = {
     enable = true;
     llmnr = "false";
-    extraConfig = ''
-      MulticastDNS=resolve
+  };
+
+  # Publish services over mDNS using systemd's DNS-SD support
+  environment.etc = {
+    "systemd/dnssd/ssh.dnssd".text = ''
+      [Service]
+      Name=%H
+      Port=22
+      Type=_ssh._tcp
+    '';
+    "systemd/dnssd/sftp-ssh.dnssd".text = ''
+      [Service]
+      Name=%H
+      Port=22
+      Type=_sftp-ssh._tcp
     '';
   };
 
-  # mDNS network publishing through avahi
-  # (Consider trying to do this with resolved/systemd dns-sd?)
+  # Applications expect to be able to resolve mDNS using Avahi
   services.avahi = {
     enable = true;
     openFirewall = true;
-    publish = {
-      enable = true;
-      hinfo = true;
-      workstation = true;
-    };
-    extraServiceFiles = {
-      ssh = "${pkgs.avahi}/etc/avahi/services/ssh.service";
-    };
+    publish.enable = false;
   };
-
 }
