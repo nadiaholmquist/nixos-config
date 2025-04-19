@@ -58,7 +58,7 @@ in
 
     # AMD GPU specific settings
     (mkIf (cfg.gpuSupport == "amd") {
-      hardware.amdgpu.initrd.enable = true;
+      #hardware.amdgpu.initrd.enable = true;
 
       #hardware.amdgpu.amdvlk.enable = true;
       # Default to RADV
