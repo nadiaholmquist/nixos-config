@@ -57,4 +57,6 @@
     AllowSuspend=no
     AllowHibernation=no
   '';
+
+  zramSwap.enable = true;
 }
