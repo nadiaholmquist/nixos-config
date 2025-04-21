@@ -8,8 +8,8 @@
     ./vm-variant.nix
     ./overlay.nix
     ./programs.nix
-    ./nix-settings.nix
     ../common/builders.nix
+    ../common/nix-settings.nix
   ];
 
   desktop = [
