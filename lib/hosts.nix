@@ -13,7 +13,7 @@
 let
   inherit (nixpkgs) lib;
   inherit (lib) genAttrs;
-  inherit (lib.attrsets) mapAttrs mapAttrs';
+  inherit (lib.attrsets) mapAttrs mapAttrs' removeAttrs;
 
   inherit (import ./overlays.nix { inherit lib; }) overlaysModuleFor;
   roleModules = import ../nixos/role-modules.nix { inputs = inputsNixOS; };
@@ -25,7 +25,9 @@ let
     "x86_64-linux"
   ];
 
-  inputsNixOS = inputs // {
+  inputsCommon = removeAttrs inputs [ "nixpkgs-nixos" ];
+
+  inputsNixOS = inputsCommon // {
     nixpkgs = nixpkgs-nixos;
   };
 
@@ -79,7 +81,9 @@ let
       { hostName, system, ... }:
       darwin.lib.darwinSystem rec {
         inherit system;
-        specialArgs = { inherit inputs; };
+        specialArgs = {
+          inputs = inputsCommon;
+        };
         modules = [
           ../darwin
           ../hosts/${hostName}
@@ -99,7 +103,9 @@ let
       { hostName, system, ... }:
       home-manager.lib.homeManagerConfiguration {
         pkgs = homePkgs."${system}";
-        extraSpecialArgs = { inherit inputs; };
+        extraSpecialArgs = {
+          inputs = inputsCommon;
+        };
         modules = [
           ../hosts/${hostName}
           ../home

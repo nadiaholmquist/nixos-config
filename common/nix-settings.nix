@@ -7,13 +7,6 @@
 
 let
   inherit (pkgs.stdenv) isDarwin isLinux;
-
-  usedInputs =
-    lib.removeAttrs inputs [
-      "nixpkgs-nixos"
-      "self"
-    ]
-    // lib.optionalAttrs isLinux { nixpkgs = inputs.nixpkgs-nixos; };
 in
 {
   nix.settings = {
@@ -27,6 +20,6 @@ in
 
   nix.channel.enable = false;
 
-  nix.registry = lib.mapAttrs (_: flake: { inherit flake; }) usedInputs;
-  nix.nixPath = lib.mapAttrsToList (n: _: "${n}=flake:${n}") usedInputs;
+  nix.registry = lib.mapAttrs (_: flake: { inherit flake; }) inputs;
+  nix.nixPath = lib.mapAttrsToList (n: _: "${n}=flake:${n}") inputs;
 }
