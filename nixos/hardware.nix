@@ -32,19 +32,6 @@ in
   config = mkMerge [
     # General hardware support
     {
-      # Enable sound with pipewire.
-      services.pulseaudio.enable = false;
-      security.rtkit.enable = true;
-      services.pipewire = {
-        enable = true;
-        alsa.enable = true;
-        alsa.support32Bit = true;
-        pulse.enable = true;
-        # Sets LD_LIBRARY_PATH globally, breaks stuff
-        #jack.enable = true;
-        wireplumber.enable = true;
-      };
-
       # Bluetooth
       hardware.bluetooth.enable = true;
 
