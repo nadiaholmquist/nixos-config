@@ -49,7 +49,7 @@ in
         })
       ];
 
-      initExtra = ''
+      initContent = ''
         PROMPT='%F{${config.dotfiles.zshPromptColor}}%n@%m %B%1~%b %f%#%f '
         # Default wordchars without slash
         WORDCHARS='*?_-.[]~=&;!#$%^(){}<>'
