@@ -20,6 +20,18 @@ in
 
   nix.channel.enable = false;
 
-  nix.registry = lib.mapAttrs (_: flake: { inherit flake; }) inputs;
   nix.nixPath = lib.mapAttrsToList (n: _: "${n}=flake:${n}") inputs;
+  nix.registry = lib.mapAttrs (_: flake: { inherit flake; }) inputs // {
+    templates = {
+      from = {
+        id = "templates";
+        type = "indirect";
+      };
+      to = {
+        type = "github";
+        owner = "NixOS";
+        repo = "templates";
+      };
+    };
+  };
 }
