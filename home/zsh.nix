@@ -12,7 +12,7 @@ let
     optional
     optionalAttrs
     ;
-  isDarwin = pkgs.hostPlatform.isDarwin;
+  inherit (pkgs.stdenv.hostPlatform) isLinux isDarwin;
 in
 {
   options.dotfiles.zshPromptColor =
@@ -44,6 +44,11 @@ in
           ls = "eza";
           cat = "bat --plain --no-pager";
         }
+        (optionalAttrs isLinux {
+          open = "xdg-open";
+          pbcopy = "wl-copy";
+          pbpaste = "wl-paste";
+        })
         (optionalAttrs isDarwin {
           unquarantine = "/usr/bin/xattr -r -d com.apple.quarantine";
         })
