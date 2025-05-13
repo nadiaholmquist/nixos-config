@@ -29,8 +29,9 @@
 
   dotfiles.builders = {
     enable = true;
+    useBuilderVMs = false;
     useMacStudio = true;
   };
 
-  nix.distributedBuilds = false;
+  nix.settings.system-features = [ "gccarch-znver3" ];
 }
