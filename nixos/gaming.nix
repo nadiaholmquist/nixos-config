@@ -20,12 +20,15 @@ in
 
     programs.gamescope.enable = true;
 
-    environment.systemPackages = [
-      pkgs.vulkan-hdr-layer-kwin6
+    environment.systemPackages = with pkgs; [
+      vulkan-hdr-layer-kwin6
+      lutris
     ];
 
     # udev rules for Steam Input
     hardware.steam-hardware.enable = true;
+    # USB-modeswitch is needed for racing controllers
+    hardware.usb-modeswitch.enable = true;
 
     programs.steam = mkIf haveSteam {
       enable = true;
