@@ -7,7 +7,7 @@
     bootloader = "grub";
     enableFanControl = true;
     gpuSupport = "amd";
-    enableROCm = false;
+    enableROCm = true;
     enableGaming = true;
     enableGPUOverclocking = true;
     enableVirtualisation = true;
