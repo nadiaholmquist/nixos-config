@@ -10,6 +10,7 @@
       dig
       killall
       rsync
+      gnumake
 
       alsa-utils
 
@@ -34,5 +35,11 @@
     clean.enable = true;
     clean.extraArgs = "--keep-since 4d --keep 3";
     flake = "/etc/nixos";
+  };
+
+  # sudo-rs
+  security = {
+    sudo.enable = false;
+    sudo-rs.enable = true;
   };
 }
