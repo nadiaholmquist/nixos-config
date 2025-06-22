@@ -12,4 +12,6 @@
   };
 
   nix-rosetta-builder.enable = false;
+
+  security.pam.services.sudo_local.watchIdAuth = true;
 }

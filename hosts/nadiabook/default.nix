@@ -11,4 +11,6 @@
     dotfiles.enableGaming = false;
     dotfiles.enableLargeApps = false;
   };
+
+  security.pam.services.sudo_local.touchIdAuth = true;
 }
